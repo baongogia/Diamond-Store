@@ -1,0 +1,69 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:3001",
+  "homepage": "https://baongogia.github.io",
+  "dependencies": {
+    "@paypal/react-paypal-js": "^8.4.0",
+    "@pdf-lib/fontkit": "^1.1.1",
+    "@react-oauth/google": "^0.12.1",
+    "@stripe/react-stripe-js": "^2.7.1",
+    "@stripe/stripe-js": "^3.5.0",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "aos": "^2.3.4",
+    "axios": "^1.7.1",
+    "firebase": "^10.12.2",
+    "firebase-tools": "^13.12.0",
+    "gapi-script": "^1.2.0",
+    "gh-pages": "^6.1.1",
+    "pdf-lib": "^1.17.1",
+    "rc-slider": "^10.6.2",
+    "react": "^18.3.1",
+    "react-confetti": "^6.1.0",
+    "react-credit-card": "^0.20.0",
+    "react-credit-cards-2": "^1.0.2",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1",
+    "react-query": "^3.39.3",
+    "react-router-dom": "^6.23.0",
+    "react-scripts": "5.0.1",
+    "react-select": "^5.8.0",
+    "react-slick": "^0.30.2",
+    "react-spinners": "^0.13.8",
+    "react-transition-group": "^4.4.5",
+    "slick-carousel": "^1.8.1",
+    "tailwindcss-textshadow": "^2.1.3",
+    "url-loader": "^4.1.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "deploy": "gh-pages -d build",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  }
+}

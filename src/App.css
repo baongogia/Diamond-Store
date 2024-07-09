@@ -1,0 +1,389 @@
+/* All */
+body {
+  overflow-x: hidden !important;
+  scroll-behavior: smooth !important;
+}
+/* Font */
+/* For uppercase */
+.text {
+  font-family: "Lexend", sans-serif;
+}
+/* For navbar */
+.Mfont {
+  font-family: "Karla";
+}
+/* For logo */
+.logo {
+  font-family: "Le Major";
+}
+/* Text gradient */
+
+.vn {
+  background: linear-gradient(90deg, #e72e00, #ddc701);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.blueneck {
+  background: linear-gradient(90deg, #1a1642, #09a0ae);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.greenneck {
+  background: linear-gradient(90deg, #005c14, #ecdd00);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.magic {
+  background: linear-gradient(90deg, #290f93, #66fae9);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.beauty {
+  background: linear-gradient(90deg, #9501d4, #1813a5);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.vol {
+  background: linear-gradient(90deg, #c40909, #deb70b);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.infor {
+  background: linear-gradient(90deg, #007102, #24ac44);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* Hover CSS */
+.list-link {
+  position: relative;
+  color: black;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.list-link::after {
+  content: "";
+  position: absolute;
+  width: 86%;
+  height: 4px;
+  bottom: 0px;
+  left: 0;
+  background-color: rgb(62, 184, 62);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease;
+}
+
+.list-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.list-link.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.list-link.unactive::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.title-link {
+  position: relative;
+  color: black;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.title-link::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 14px;
+  left: 0;
+  background-color: rgb(13, 54, 13);
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.title-link:hover::after {
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+.li-link {
+  position: relative;
+  color: black;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.li-link::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 14px;
+  left: 0;
+  background-color: rgb(13, 54, 13);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.li-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.footer-link {
+  position: relative;
+  color: black;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.footer-link::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0px;
+  left: 0;
+  background-color: rgb(13, 54, 13);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.footer-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.profile-link {
+  position: relative;
+  color: black;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.profile-link::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  bottom: 0px;
+  left: 0;
+  background-color: rgb(62, 184, 62);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease;
+}
+
+.profile-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.testcolor {
+  color: rgba(6, 148, 6, 0.682);
+}
+
+.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.unactive::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+/* AOS */
+[data-aos^="fade"][data-aos^="fade"] {
+  transition-property: opacity, transform, background-color, color !important;
+}
+/* Card */
+.perspective-800 {
+  perspective: 800px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Slider */
+.slick-dots {
+  display: flex !important;
+  margin-bottom: 1.56em !important;
+}
+/* Radio checked */
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radio-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.radio-input {
+  display: none;
+}
+
+.custom-radio {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid #000;
+  border-radius: 50%;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.radio-input:checked + .custom-radio {
+  border-color: #4caf50;
+}
+
+.custom-radio::after {
+  content: "";
+  display: block;
+  width: 12px;
+  height: 12px;
+  background-color: #4caf50;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.3s;
+}
+
+.radio-input:checked + .custom-radio::after {
+  transform: translate(-50%, -50%) scale(1);
+}
+/* Checkbox checked  */
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.checkbox-input {
+  display: none;
+}
+
+.custom-checkbox {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+  border: 1px solid #000;
+  border-radius: 4px;
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.checkbox-input:checked + .custom-checkbox {
+  border-color: #4caf50;
+  background-color: #4caf50;
+}
+
+.custom-checkbox::after {
+  content: "";
+  display: block;
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg) scale(0);
+  transition: transform 0.3s;
+}
+
+.checkbox-input:checked + .custom-checkbox::after {
+  transform: translate(-50%, -50%) rotate(45deg) scale(1);
+}
+
+.checkbox-label:hover .custom-checkbox {
+  border-color: #888;
+}
+/* Hide scrool */
+/* Custom scrollbar styles */
+.hide-scrollbar {
+  overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.product-transition-enter {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.product-transition-enter-active {
+  max-height: 1000px; /* Max height to ensure content fits */
+  opacity: 1;
+  transition: max-height 0.3s ease-in, opacity 0.3s ease-in;
+}
+
+.product-transition-exit {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+.product-transition-exit-active {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
