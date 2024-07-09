@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { PDFDocument, rgb } from "pdf-lib";
 import { RingLoader } from "react-spinners";
 import fontKit from "@pdf-lib/fontkit";
-import TPLeMajor from "./TP Le Major.ttf"; // Adjust the path according to your file structure
+import TPLeMajor from "./TP Le Major.ttf";
 
 export default function WarrantyGene({ orderId }) {
   const [warrantyData, setWarrantyData] = useState({});
@@ -110,8 +110,8 @@ export default function WarrantyGene({ orderId }) {
       const firstPage = pdfDoc.getPages()[0];
       const startDate = warrantyInfo.StartDate.slice(0, 10);
       const endDate = warrantyInfo.EndDate.slice(0, 10);
-
-      // Draw text on the page using the custom font
+      const productName = warrantyInfo.ProductName.toLowerCase();
+      // Warranty ID
       firstPage.drawText(`${warrantyInfo.WarrantyID}`, {
         x: 150,
         y: 488,
@@ -119,37 +119,64 @@ export default function WarrantyGene({ orderId }) {
         font: customFont,
         color: rgb(1, 1, 1),
       });
-      firstPage.drawText(`${warrantyInfo.CustomerName}`, {
-        x: 295,
-        y: 425,
+      firstPage.drawText(
+        `A special thank to Mr/Mrs ${warrantyInfo.CustomerName}`,
+        {
+          x: 140,
+          y: 420,
+          size: 13,
+          font: customFont,
+          color: rgb(1, 1, 1),
+        }
+      );
+      firstPage.drawText(`Warranty information`, {
+        x: 140,
+        y: 390,
         size: 13,
         font: customFont,
         color: rgb(1, 1, 1),
       });
-      firstPage.drawText(`${warrantyInfo.ProductID}`, {
-        x: 220,
-        y: 266,
+      firstPage.drawText(`Product ID: ${warrantyInfo.ProductID}`, {
+        x: 140,
+        y: 360,
         size: 12,
         font: customFont,
         color: rgb(1, 1, 1),
       });
-      firstPage.drawText(`${warrantyInfo.ProductName}`, {
-        x: 240,
+      firstPage.drawText(`Product name: ${productName}`, {
+        x: 140,
+        y: 330,
+        size: 12,
+        font: customFont,
+        color: rgb(1, 1, 1),
+      });
+      firstPage.drawText(`Category: ${warrantyInfo.Category}`, {
+        x: 140,
+        y: 300,
+        size: 12,
+        font: customFont,
+        color: rgb(1, 1, 1),
+      });
+      firstPage.drawText(
+        `Material: ${warrantyInfo.Material} ${warrantyInfo.MaterialWeight}g, ${warrantyInfo.GemCaratWeight} Carat`,
+        {
+          x: 140,
+          y: 270,
+          size: 12,
+          font: customFont,
+          color: rgb(1, 1, 1),
+        }
+      );
+      firstPage.drawText(`Gem Origin: ${warrantyInfo.GemOrigin}`, {
+        x: 140,
         y: 240,
         size: 12,
         font: customFont,
         color: rgb(1, 1, 1),
       });
-      firstPage.drawText(`${startDate}`, {
-        x: 295,
-        y: 212,
-        size: 13,
-        font: customFont,
-        color: rgb(1, 1, 1),
-      });
-      firstPage.drawText(`${endDate}`, {
-        x: 415,
-        y: 212,
+      firstPage.drawText(`Warranty period from: ${startDate} to: ${endDate}`, {
+        x: 140,
+        y: 210,
         size: 13,
         font: customFont,
         color: rgb(1, 1, 1),

@@ -63,7 +63,7 @@ export default function ReviewOrder() {
                         {userData.FirstName} {userData.LastName}
                       </div>
                     </div>
-                    <div className="h-10 title-link">Modify</div>
+                    <div className="h-10 title-link">Enternity</div>
                   </div>
                   <div className="">{userData.Address}</div>
                   <div className="">{userData.Email}</div>
@@ -98,7 +98,13 @@ export default function ReviewOrder() {
                   <div className="title-link h-10 ml-8">Add New</div>
                 </div>
                 <div className="">
-                  <input type="checkbox" name="" id="" />
+                  <input
+                    type="checkbox"
+                    checked={true}
+                    className="pointer-events-none"
+                    name=""
+                    id=""
+                  />
                   <label htmlFor="" className="ml-3 underline">
                     I acknowledge that I have read and accepted Eternity’s
                     Conditions of Sale and Privacy Policy

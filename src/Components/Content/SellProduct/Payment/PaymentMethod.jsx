@@ -99,7 +99,7 @@ export default function PaymentMethod() {
       <div className="text uppercase">Payment method</div>
       <div className="relative w-[15vw] mt-4 mb-12 flex flex-col justify-between">
         {/* Credit Card */}
-        <div className="flex items-center justify-between w-[80%] mb-3">
+        {/* <div className="flex items-center justify-between w-[80%] mb-3">
           <div className="w-1/4">
             <input
               type="radio"
@@ -116,15 +116,15 @@ export default function PaymentMethod() {
           <div className="w-1/2">
             <label htmlFor="Card">Card</label>
           </div>
-        </div>
+        </div> */}
         {/* Credit Card form */}
-        <div
+        {/* <div
           className={`${
             paymentMethod === "Card" ? "" : "hidden"
           } -translate-y-4 transition-all duration-300 ease-in-out`}
         >
           <CreditCard amount={subtotal - 0.05 * subtotal} />
-        </div>
+        </div> */}
         {/* PayPal */}
         <div className="relative flex items-center justify-between w-[80%] mb-3">
           <div className="w-1/4">

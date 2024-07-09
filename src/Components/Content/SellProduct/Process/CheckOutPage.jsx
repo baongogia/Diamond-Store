@@ -94,7 +94,7 @@ export default function CheckOutPage() {
             />
           </div>
           {/* Ship options */}
-          <div className="w-[50%] ml-2 h-[35vh] flex justify-center items-center mb-5 border-b-[0.1em] border-b-black border-opacity-20">
+          <div className="w-[50%] ml-2 h-[25vh] flex justify-center items-center mb-5 border-b-[0.1em] border-b-black border-opacity-20">
             <div className="w-[90%] h-[85%]">
               <div className="text uppercase">Shipping method</div>
               <div className="font-serif text-[0.95em] mt-8">
@@ -106,6 +106,7 @@ export default function CheckOutPage() {
                 <div className="flex justify-between w-full mt-6">
                   <label htmlFor={"inputId"} className="radio-label">
                     <input
+                      checked={true}
                       type="radio"
                       id={"inputId"}
                       name="radio"
@@ -113,25 +114,9 @@ export default function CheckOutPage() {
                     />
                     <div className="custom-radio"></div>
                     <p className="uppercase text hover:underline text-[0.9em] ml-2">
-                      {"saturday delivery option"}
+                      {"Ship to your address"}
                     </p>
                   </label>
-                  <div className="text uppercase mr-4">0.00$</div>
-                </div>
-                <div className="flex justify-between w-full mt-6">
-                  <label htmlFor={"inputId2"} className="radio-label">
-                    <input
-                      type="radio"
-                      id={"inputId2"}
-                      name="radio"
-                      className="radio-input"
-                    />
-                    <div className="custom-radio"></div>
-                    <p className="uppercase text hover:underline text-[0.9em] ml-2">
-                      {"standard delivery"}
-                    </p>
-                  </label>
-                  <div className="text uppercase mr-4">0.00$</div>
                 </div>
               </div>
             </div>

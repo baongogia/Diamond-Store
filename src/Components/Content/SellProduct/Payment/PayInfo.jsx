@@ -23,7 +23,7 @@ export default function PayInfo() {
     );
   };
   return (
-    <div className="ml-8 mt-8 w-[55%]">
+    <div className="ml-8 mt-8 mb-10 w-[55%]">
       <div className="w-full mb-4">
         <label htmlFor="" className="text-zinc-700 opacity-60">
           Title
@@ -89,10 +89,6 @@ export default function PayInfo() {
           <option value="Viet Nam"></option>
         </datalist>
       </div>
-
-      <Input type="text" label="City" placeholder="City" />
-      <Input type="text" label="State" placeholder="State" />
-      <Input type="text" label="Zip Code" placeholder="Zip Code" />
     </div>
   );
 }

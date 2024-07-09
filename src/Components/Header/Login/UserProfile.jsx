@@ -7,6 +7,7 @@ import WishList from "../SileProfileBar/WishList";
 import { WishlistContext } from "../SileProfileBar/WishlistContext";
 import MyPassword from "../SileProfileBar/MyPassword";
 import MyProfile from "../SileProfileBar/MyProfile";
+import MyOrder from "../SileProfileBar/MyOrder";
 
 export default function UserProfile() {
   const { userData } = useContext(UserContext);
@@ -201,12 +202,14 @@ export default function UserProfile() {
               </div>
             </div>
           )}
+          {/* Edit Profile */}
+          {content === "my profile" && <MyProfile />}
           {/* Wish List */}
           {content === "My Wish List" && <WishList />}
-          {/* Profile */}
+          {/* Change Password */}
           {content === "my password" && <MyPassword />}
-          {/* Password */}
-          {content === "my profile" && <MyProfile />}
+          {/* Orders */}
+          {content === "my orders" && <MyOrder />}
         </div>
       </div>
     </div>

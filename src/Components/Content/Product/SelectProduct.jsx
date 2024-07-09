@@ -23,7 +23,6 @@ export default function SelectProduct({ details }) {
   const { addToWishlist, removeFromWishlist, isInWishlist } =
     useContext(WishlistContext);
   const isAvailable = details.Status;
-  console.log(isAvailable);
   // Hold wishlist icon;
   useEffect(() => {
     setRedHeart(isInWishlist(details.ProductId));
@@ -58,6 +57,13 @@ export default function SelectProduct({ details }) {
         image: details.Image,
         name: details.ProductName,
         material: details.Material,
+        color: details.Color,
+        origin: details.GemOrigin,
+        gender: details.Gender,
+        carat: details.CaratWeight,
+        clarity: details.Clarity,
+        cut: details.Cut,
+        weight: details.Weight,
         size: selectedSize,
         price: price,
         code: id,
@@ -176,8 +182,8 @@ export default function SelectProduct({ details }) {
           <span className="ml-2">{details.Gender}</span>
         </div>
         <div className="flex items-center mb-1 ml-3">
-          <span className="font-bold infor">Brand:</span>
-          <span className="ml-2">Enternity</span>
+          <span className="font-bold infor">Weight:</span>
+          <span className="ml-2">{details.Weight}g</span>
         </div>
       </div>
       {/* Code */}

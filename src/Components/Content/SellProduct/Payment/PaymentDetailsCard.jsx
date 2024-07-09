@@ -13,16 +13,26 @@ export default function PaymentDetailsCard({ item }) {
         <div className="w-full flex justify-between">
           <div className="text uppercase text-[1.2em]">{item.name}</div>
         </div>
-        <div className="font-serif mt-3">Yellow gold</div>
-        <div className="mt-3">Size: {item.size}</div>
+        <div className="grid grid-cols-2 gap-0">
+          <div className="font-serif mt-3">Color: {item.color}</div>
+          <div className="mt-3">Size: {item.size}</div>
+          <div className="font-serif mt-3">{item.carat} Carat</div>
+          <div className="mt-3">Weight: {item.weight}g</div>
+        </div>
         <div className="flex font-serif mt-3"></div>
         <div className="text uppercase text-[1.2em] mb-7">
           {item.price.toLocaleString("en-US")}$
         </div>
         <div className="flex items-center border-y-[0.1em] border-x-black w-full h-14">
-          <input type="checkbox" name="wrap" id="" />
+          <input
+            type="checkbox"
+            name="wrap"
+            className="pointer-events-none"
+            id=""
+            checked={true}
+          />
           <label htmlFor="wrap" className="ml-5 flex items-center">
-            <div className="text mr-2">Add Gift Wrapping</div>
+            <div className="text mr-2">Select for {item.gender}</div>
             <ion-icon name="chevron-down-outline"></ion-icon>
           </label>
         </div>

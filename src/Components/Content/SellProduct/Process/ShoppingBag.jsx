@@ -4,17 +4,19 @@ import ShoppingFooter from "../../../Footer/ShoppingFooter";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../../Header/Header/Cart/CartContext";
 import Navbar from "../../../Header/Header/Navbar/Navbar";
+import { UserContext } from "../../../Header/Login/UserContext";
 
 export default function ShoppingBag() {
   const totalBillRef = useRef(null);
   const itemsRef = useRef(null);
   const [isSticky, setIsSticky] = useState(true);
   const { cartItems } = useContext(CartContext);
-
+  const { userData } = useContext(UserContext);
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
+  const discount = userData.DiscountRate * subtotal;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,7 +69,7 @@ export default function ShoppingBag() {
               </div>
             </div>
             {cartItems.length > 0 ? (
-              cartItems.map((item, index) => (
+              cartItems.map((item) => (
                 <ShopingBagItems id={item.id} item={item} />
               ))
             ) : (
@@ -90,8 +92,8 @@ export default function ShoppingBag() {
               </div>
             </div>
             <div className="w-full flex justify-between">
-              <div className="font-serif">Sales tax</div>
-              <div className="">0,00$</div>
+              <div className="font-serif">Discount</div>
+              <div className="">-{discount.toFixed(2)}$</div>
             </div>
             <Link
               to={`/CheckOutPage`}

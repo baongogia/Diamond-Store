@@ -115,7 +115,7 @@ export default function PaymentDetails({ title, linkto }) {
             <div className="text uppercase text-[1.3em]">order summary</div>
             <div className="">{cartItems.length} Items</div>
           </div>
-          <div className="font-serif title-link h-10">Modify</div>
+          <div className="font-serif title-link h-10">Enternity</div>
         </div>
         {/* Products */}
         <div className="relative w-full flex flex-col h-[31vh] overflow-y-auto mb-4">
@@ -139,13 +139,6 @@ export default function PaymentDetails({ title, linkto }) {
                 <div className="text uppercase text-[1.3em]">
                   {parseFloat(subtotal).toFixed(2)}$
                 </div>
-              </div>
-
-              <div className="w-full flex justify-between mb-4">
-                <div className="text uppercase text-[0.9em]">
-                  STANDARD DELIVERY
-                </div>
-                <div className="text uppercase text-[0.9em]">0.00$</div>
               </div>
             </div>
 
