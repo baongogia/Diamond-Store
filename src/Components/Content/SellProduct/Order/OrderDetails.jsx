@@ -10,8 +10,6 @@ import { PaymentContext } from "../Payment/PaymentContext";
 import WarrantyGene from "../Warranty/WarantyGene";
 
 export default function OrderDetails() {
-  const dateNow = localStorage.getItem("OrderDate");
-  const date = dateNow.slice(0, 10);
   const [similar, setSimilar] = useState([]);
   const { order, setOrder } = useContext(OrderContext);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -302,7 +300,6 @@ export default function OrderDetails() {
             </div>
             {/* Order Details */}
             <div className="w-full flex flex-col justify-between h-1/2 Mfont">
-              <div className="">Create at: {date}</div>
               <div className="flex">
                 <div className="">Status:</div>
                 <div className="ml-2 text-white bg-green-800 rounded-md px-2">
