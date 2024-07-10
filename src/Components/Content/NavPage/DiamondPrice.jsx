@@ -23,7 +23,7 @@ export default function DiamondPrice() {
   const [loading, setLoading] = useState(true);
   const [gemData, setGemData] = useState([]);
   const [apiUrl, setApiUrl] = useState(
-    "https://diamondstoreapi.azurewebsites.net/api/GemPriceList"
+    "https://diamondstoreapi.azurewebsites.net/api/GemPriceList/FilterGemPriceList"
   );
   const prevApiUrl = React.useRef(apiUrl);
 
