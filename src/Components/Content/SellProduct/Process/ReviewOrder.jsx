@@ -35,6 +35,16 @@ export default function ReviewOrder() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const [currentTime, setCurrentTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000); // Update every second
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(timer);
+  }, []);
   return (
     <div className="">
       <div className="flex justify-center items-center bg-white">
@@ -76,7 +86,9 @@ export default function ReviewOrder() {
                 <div className="w-full h-[25%] flex flex-col justify-between font-serif">
                   <div className="text uppercase">shipping method</div>
                   <div className="">Standard Delivery</div>
-                  <div className="">Estimated Delivery: 05/30/2024</div>
+                  <div className="">
+                    Order time: {currentTime.toLocaleString()}
+                  </div>
                 </div>
               </div>
             </div>
@@ -94,8 +106,12 @@ export default function ReviewOrder() {
                   />
                 </div>
                 <div className="flex font-serif mt-4 mb-3">
-                  <div className="title-link h-10">Update Address</div>
-                  <div className="title-link h-10 ml-8">Add New</div>
+                  <Link to={`/UserProfile`} className="title-link h-10">
+                    Update Address
+                  </Link>
+                  <Link to={`/UserProfile`} className="title-link h-10 ml-8">
+                    Add New
+                  </Link>
                 </div>
                 <div className="">
                   <input

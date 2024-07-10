@@ -59,11 +59,11 @@ export default function CheckOutPage() {
             <div className="font-serif text-[0.85em] w-full flex flex-col justify-center items-center">
               <div className="w-[90%] mt-8">
                 {" "}
-                Order placed on this site can be delivered only in the United
-                States. If you would like your order to arrive elsewhere, you
-                will need to change your Eternity site country.<br></br> For
-                more information regarding your order, please contact us at
-                1-800-ETERNITY (1-800-227-8437), where a Eternity Ambassador
+                Order placed on this site can be delivered only in the Viet Nam.
+                If you would like your order to arrive elsewhere, you will need
+                to change your Eternity site country.<br></br> For more
+                information regarding your order, please contact us at
+                84-800-ETERNITY (84-800-888-8888), where a Eternity Ambassador
                 will be delighted to assist you.
               </div>
             </div>

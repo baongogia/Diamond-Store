@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { WishlistContext } from "../../../Header/SileProfileBar/WishlistContext";
 
 export default function ShopingBagItems({ item }) {
+  const { addToWishlist, removeFromWishlist, isInWishlist } =
+    useContext(WishlistContext);
+  const [notification, setNotification] = useState("");
+
+  const handleWishlistClick = () => {
+    if (isInWishlist(item.productID)) {
+      removeFromWishlist(item.productID);
+      setNotification("Item removed from wishlist");
+    } else {
+      addToWishlist(item);
+      setNotification("Item added to wishlist");
+    }
+
+    setTimeout(() => {
+      setNotification("");
+    }, 3000); // Clear the notification after 3 seconds
+  };
+
   return (
     <div className="relative w-full mt-8 h-[50vh] bg-gray-500 bg-opacity-5 overflow-hidden">
+      {notification && (
+        <div className="absolute bottom-0 left-0 w-full bg-green-500 text-white text-center py-2">
+          {notification}
+        </div>
+      )}
       <div
         style={{
           backgroundImage: `url(${item.image})`,
@@ -29,7 +53,14 @@ export default function ShopingBagItems({ item }) {
           <Link to="/" className="title-link h-10">
             Add Another Items
           </Link>
-          <div className="ml-8 title-link h-10">Move to Wishlist</div>
+          <div
+            className="ml-8 title-link h-10 cursor-pointer"
+            onClick={handleWishlistClick}
+          >
+            {isInWishlist(item.productID)
+              ? "Remove from Wishlist"
+              : "Move to Wishlist"}
+          </div>
         </div>
         <div className="flex items-center border-y-[0.1em] border-x-black border-opacity-20 w-full h-20 mt-3">
           <input

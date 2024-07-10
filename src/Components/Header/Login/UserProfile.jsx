@@ -168,26 +168,25 @@ export default function UserProfile() {
               <div className="relative w-[95%] h-[95%] border-black border-[0.1em] border-opacity-30">
                 <div className="absolute top-8 left-8 flex flex-col justify-between h-[25%]">
                   <div className="text uppercase mb-5">My wish list</div>
-                  {wishlist.length > 0 ? (
-                    wishlist.map((item, index) => (
-                      <div
-                        key={index}
-                        className="grid grid-cols-4 gap-4 font-serif"
-                      >
-                        <div
-                          onClick={() =>
-                            navigate(`/ProductPage/${item.productID}`)
-                          }
-                          style={{ backgroundImage: `url(${item.image})` }}
-                          className="h-20 w-20 bg-cover bg-center rounded-lg cursor-pointer"
-                        ></div>
+                  <div className="grid grid-cols-4 gap-2">
+                    {wishlist.length > 0 ? (
+                      wishlist.map((item, index) => (
+                        <div key={index} className="">
+                          <div
+                            onClick={() =>
+                              navigate(`/ProductPage/${item.productID}`)
+                            }
+                            style={{ backgroundImage: `url(${item.image})` }}
+                            className="h-20 w-20 bg-cover bg-center rounded-lg cursor-pointer"
+                          ></div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="absolute top-1/2 w-max text-center">
+                        Your wish list is empty
                       </div>
-                    ))
-                  ) : (
-                    <div className="w-full h-full flex justify-center items-center">
-                      Your wish list is empty
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="relative w-[95%] h-[95%] border-black border-[0.1em] border-opacity-30">

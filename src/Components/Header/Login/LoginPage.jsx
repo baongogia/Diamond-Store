@@ -14,7 +14,6 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const { login } = useContext(UserContext);
-  const { setUserData } = useContext(UserContext);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,8 +34,11 @@ export default function LoginPage() {
       // Update local storage
       localStorage.setItem("userData", JSON.stringify({ data: userData }));
       localStorage.setItem("token", token);
-      localStorage.setItem("isLoggedIn", "true");
-
+      if (userData.Status) {
+        localStorage.setItem("isLoggedIn", "true");
+      } else {
+        localStorage.setItem("isLoggedIn", "false");
+      }
       // Update context state
       login(userData);
       navigate("/UserProfile");

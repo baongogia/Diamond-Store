@@ -189,7 +189,7 @@ export default function PaymentMethod() {
         >
           <div
             style={{
-              backgroundImage: `url('https://cdn.qrcode-ai.com/qrcode/a4a5d48322f55187147712a4bac0c155-1718981635066.png')`,
+              backgroundImage: `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfQKzLQdB9YfdlZXmfFGHXJPTuz849jMo9dvQU_zHVVWdlKGpa8ZMLKPY_NSWDL7Ej6oM&usqp=CAU')`,
             }}
             className="w-1/2 h-full bg-contain bg-center bg-no-repeat"
           ></div>

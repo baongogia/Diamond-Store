@@ -19,6 +19,7 @@ export default function SelectProduct({ details }) {
   const [showCer, setShowCer] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [showVid, setShowVid] = useState(false);
+  const [gem, setGem] = useState();
   const { setShowCart, addToCart, isProductInCart } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist, isInWishlist } =
     useContext(WishlistContext);
@@ -39,6 +40,25 @@ export default function SelectProduct({ details }) {
   const calculatePrice = (selectedSize) => {
     return details.UnitSizePrice * (selectedSize - details.ProductSize);
   };
+  // GetGemInfo
+  useEffect(() => {
+    const fetchGemDetails = async () => {
+      try {
+        const response = await fetch(
+          `https://localhost:7292/api/Gems/${details.GemId}`
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setGem(data);
+      } catch (error) {
+        console.error("Error fetching gem details:", error);
+      }
+    };
+
+    fetchGemDetails();
+  }, [details.GemId]);
   // Calculate price
   const selectedSize = size ? size.value : oriSize;
   const price =
@@ -107,13 +127,12 @@ export default function SelectProduct({ details }) {
       : "Please Select Size";
   // Size to select
   const options = [
-    { value: 10, label: "10" },
-    { value: 11, label: "11" },
-    { value: 12, label: "12" },
-    { value: 13, label: "13" },
-    { value: 14, label: "14" },
-    { value: 15, label: "15" },
     { value: details.ProductSize, label: `${details.ProductSize}` },
+    { value: details.ProductSize + 2, label: `${details.ProductSize + 2}` },
+    { value: details.ProductSize + 4, label: `${details.ProductSize + 4}` },
+    { value: details.ProductSize + 6, label: `${details.ProductSize + 6}` },
+    { value: details.ProductSize + 8, label: `${details.ProductSize + 8}` },
+    { value: details.ProductSize + 10, label: `${details.ProductSize + 10}` },
   ];
   const handleChange = (selectedOption) => {
     setSize(selectedOption);
@@ -296,7 +315,7 @@ export default function SelectProduct({ details }) {
           <div className="uppercase ml-4 footer-link">Ref.B52</div>
         </div>
       </div>
-      {/* CIA */}
+      {/* GIA */}
       <div
         className={`absolute z-10 -top-3 -left-[40vw] w-[70vw] h-[80vh] border-green-700 border-[0.4em] border-double  ${
           showCer ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -306,10 +325,44 @@ export default function SelectProduct({ details }) {
       >
         <div
           style={{
-            backgroundImage: `url('https://lapolajewelry.com/image/catalog/san_pham/WEB/4.52%20D%20-1155.jpg')`,
+            backgroundImage: `url('/gia.jpg')`,
           }}
-          className="relative w-full h-full bg-red-500 bg-cover bg-center bg-no-repeat"
+          className="relative w-full h-full bg-cover bg-center bg-no-repeat"
         >
+          <div className="absolute inset-0 flex justify-center items-center">
+            <div className="w-[44%] h-[81%] relative -bottom-11 -left-64">
+              <div className="absolute top-10 right-6 Mfont">
+                {details.GemId}
+                {details.MaterialId}
+              </div>
+              <div className="absolute top-16 right-6 Mfont">{gem?.Shape}</div>
+              <div className="absolute top-36 right-4 Mfont">
+                {details.CaratWeight} Carat
+              </div>
+              <div className="absolute top-[10.3rem] right-8 Mfont">
+                {details.Color}
+              </div>
+              <div className="absolute top-[11.6rem] right-4 Mfont">
+                {details.Clarity}
+              </div>
+              <div className="absolute top-[12.85rem] right-4 Mfont">
+                {details.Cut}
+              </div>
+              <div className="absolute top-[16.7rem] right-4 Mfont">
+                {gem?.Polish}
+              </div>
+              <div className="absolute top-[18rem] right-4 Mfont">
+                {gem?.Symmetry}
+              </div>
+              <div className="absolute top-[19.2rem] right-4 Mfont">
+                {gem?.Fluorescence}
+              </div>
+            </div>
+          </div>
+          <div className="absolute left-[69.7%] top-10">
+            {details.GemId}
+            {details.MaterialId}
+          </div>
           <div
             onClick={() => {
               setShowCer(false);
