@@ -1,56 +1,151 @@
-import React from "react";
-import SideBar from "../Items/SideBar";
-import ItemsList from "../Items/ItemsList";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState, useContext, useRef } from "react";
+import { title } from "../../HomePage/HomePage";
+import ProductShopCard from "../../Product/ProductShopCard";
+import { RingLoader } from "react-spinners";
+import { SortingContext } from "../Sort/SortingContext";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { DataContext } from "../Sort/DataContext";
 
-export default function AllItems() {
-  const category = useParams();
-  const cat = category.category;
-  console.log(cat);
+export default function ItemsList() {
+  const { dataFil, setDataFil, apiUrl } = useContext(DataContext);
+  const [loading, setLoading] = useState(true);
+  const prevApiUrl = useRef("");
+  const { sortOption } = useContext(SortingContext);
+  const cache = useRef({});
+
+  // AOS
+  useEffect(() => {
+    AOS.init({
+      once: true,
+      duration: 1500,
+      offset: 0,
+    });
+  }, []);
+
+  // Fetch data
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      if (cache.current[apiUrl]) {
+        setDataFil(
+          Array.isArray(cache.current[apiUrl]) ? cache.current[apiUrl] : []
+        );
+        setLoading(false);
+      } else {
+        try {
+          const response = await fetch(apiUrl);
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          cache.current[apiUrl] = data; // Cache the response
+          setDataFil(Array.isArray(data) ? data : []);
+        } catch (error) {
+          console.error("Failed to fetch data:", error);
+          setDataFil([]);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    // Set loading when change api url
+    if (apiUrl && apiUrl !== prevApiUrl.current) {
+      fetchData();
+      prevApiUrl.current = apiUrl;
+    }
+  }, [apiUrl, setDataFil]);
+
+  // Sort items
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  useEffect(() => {
+    if (sortOption === "price low to high") {
+      setDataFil((prevItems) =>
+        [...prevItems].sort((a, b) => a.ProductPrice - b.ProductPrice)
+      );
+    } else if (sortOption === "price high to low") {
+      setDataFil((prevItems) =>
+        [...prevItems].sort((a, b) => b.ProductPrice - a.ProductPrice)
+      );
+    } else if (sortOption === "recommended") {
+      setDataFil((prevItems) => shuffleArray([...prevItems]));
+    }
+  }, [sortOption, setDataFil]);
+
   return (
-    <div className="">
-      {/* Introduce */}
-      <div className="w-full h-[35vh] -translate-y-7 flex">
-        <div
-          style={{
-            backgroundImage: `url(${
-              cat === "Rings"
-                ? "https://www.cartier.com/on/demandware.static/-/Library-Sites-CartierSharedLibrary-BGTJ/default/dw8da3feb4/plp-banners/header_jwl_rings_VIEWALL.jpg"
-                : cat === "Earrings"
-                ? "https://www.cartier.com/on/demandware.static/-/Library-Sites-CartierSharedLibrary-BGTJ/default/dwe8ea5bee/plp/jewellery/earrings/grain-de-cafe/header/NEW%2001_HEADER_GDC_1920x800.jpg"
-                : cat === "Bracelets"
-                ? "https://www.cartier.com/on/demandware.static/-/Library-Sites-CartierSharedLibrary-BGTJ/default/dwee7fc95b/plp-banners/JEWELRY_BANNERS_1920x800_VIEW-ALL-BRACELETS.jpg"
-                : cat === "Necklaces"
-                ? "https://www.cartier.com/on/demandware.static/-/Library-Sites-CartierSharedLibrary-BGTJ/default/dwaad75773/plp/jewellery/necklaces/header/01_HEADER_CLASH_NECKLACES_PLP_1920x800.jpg"
-                : ""
-            })`,
-          }}
-          className="w-1/2 h-full bg-cover bg-center bg-no-repeat"
-        ></div>
-        <div className="w-1/2 h-full bg-black bg-opacity-5 flex justify-center items-center">
-          <div className="w-[65%]">
-            <div className="text uppercase text-[1.6em] mb-2">{cat}</div>
-            <div className="font-serif">
-              {`${
-                cat === "Rings"
-                  ? "Enternity jewelry is a unique expression of a creator's style and imagination. To learn more about these exceptional pieces, discover our collection of women’s and men's rings."
-                  : cat === "Earrings"
-                  ? "Enternity jewelry is a unique expression of the Maison's style, creativity, and savoir-faire. To learn more about these exceptional pieces, discover our collection of women’s earrings."
-                  : cat === "Bracelets"
-                  ? "A love child of '70s New York, the LOVE collection is a symbol of free-spirited love. Its binding closure and screw motif give it true permanence, while diverse interpretations allow for a unique expression of feelings. Lock in your love, forever."
-                  : cat === "Necklaces"
-                  ? "From the audacity of the Juste Un Clou, to the boldness of the Panthère and the charms of Amulette, our fine necklaces will take your breath away. Each model will add an elegant touch to your look, making unforgettable statements everywhere you go."
-                  : ""
-              }`}
-            </div>
+    <div className="w-[70vw] h-max">
+      <div className="w-full h-full grid grid-cols-4 gap-4 overflow-hidden">
+        {loading ? (
+          <div className="w-[63vw] h-[80vh] flex justify-center items-center">
+            <RingLoader size={100} color="#54cc26" />
           </div>
-        </div>
+        ) : (
+          dataFil.map((item, index) => (
+            <React.Fragment key={item.id}>
+              {/* Banner */}
+              {index === 6 && (
+                <div className="col-span-2 w-full mt-2 ml-2">
+                  <div
+                    style={{
+                      backgroundImage: `url('https://www.cartier.com/on/demandware.static/-/Library-Sites-CartierSharedLibrary-BGTJ/default/dw2ef41ab6/clp/2022/Beautes%20du%20Monde/1.%20CAMAIL_1920%20x%201494-NEW-2.jpg')`,
+                    }}
+                    className="w-full h-[50%] bg-cover bg-center mb-10"
+                  ></div>
+                  <div className="-translate-y-6">
+                    {title(
+                      "THE CAMAIL NECKLACE",
+                      "A bird’s plumage becomes the abstract motif of a choker composed of the 42.44-carat ensemble of five Zambian emeralds.",
+                      "Shop Gifts"
+                    )}
+                  </div>
+                </div>
+              )}
+              {index === 14 && (
+                <div className="col-span-2 w-full mt-2 ml-2">
+                  <div
+                    style={{
+                      backgroundImage: `url('https://www.cartier.com/on/demandware.static/-/Library-Sites-CartierSharedLibrary-BGTJ/default/dw2c4e2d12/clp/2022/Beautes%20du%20Monde/3.%20COLLIER%20NM_CYCADA_1920x1494.jpg')`,
+                    }}
+                    className="w-full h-[50%] bg-cover bg-center mb-10"
+                  ></div>
+                  <div className="-translate-y-6">
+                    {title(
+                      "THE CYMBALE NECKLACE",
+                      "Insects are a source of fascination for the Maison, thanks to an anatomy that concentrates a multitude of details into a miniature space.",
+                      "Shop Gifts"
+                    )}
+                  </div>
+                </div>
+              )}
+              {/* Products */}
+              <ProductShopCard
+                key={item.id}
+                id={item.ProductId}
+                img={item.Image}
+                name={item.ProductName}
+                material={item.Material}
+                price={parseFloat(item.ProductPrice).toFixed(2)}
+              />
+            </React.Fragment>
+          ))
+        )}
       </div>
-      <div className="w-screen flex justify-around">
-        {/* SideBar */}
-        <SideBar initialCategory={cat} />
-        {/* Items */}
-        <ItemsList />
+      <div className="mt-12 w-full h-[20vh]">
+        <div className="w-full flex flex-col justify-center items-center">
+          <img
+            src="https://png.pngtree.com/png-vector/20220719/ourmid/pngtree-eternal-love-symbol-heart-infinity-sign-calligraphy-for-declarations-vector-png-image_37918768.png"
+            alt=""
+            className="w-1/4 mb-3"
+          />
+          <div className="font-serif">{`Showing ${dataFil.length} items`}</div>
+        </div>
       </div>
     </div>
   );

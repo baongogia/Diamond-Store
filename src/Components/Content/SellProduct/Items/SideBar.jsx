@@ -24,10 +24,12 @@ export default function SideBar({ initialCategory }) {
     Material: [],
   });
   const isInitialLoad = useRef(true);
+
   // Save user filter
   useEffect(() => {
     const savedFilters = localStorage.getItem("filters");
     const savedCaratWeight = localStorage.getItem("caratWeight");
+    const savedApiUrl = localStorage.getItem("apiUrl");
 
     if (savedFilters) {
       setFilters(JSON.parse(savedFilters));
@@ -37,13 +39,18 @@ export default function SideBar({ initialCategory }) {
       setCaratWeight(JSON.parse(savedCaratWeight));
     }
 
-    const query = buildQuery(
-      savedCaratWeight ? JSON.parse(savedCaratWeight) : caratWeight,
-      savedFilters ? JSON.parse(savedFilters) : filters
-    );
-    setApiUrl(
-      `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`
-    );
+    if (savedApiUrl) {
+      setApiUrl(savedApiUrl);
+    } else {
+      const query = buildQuery(
+        savedCaratWeight ? JSON.parse(savedCaratWeight) : caratWeight,
+        savedFilters ? JSON.parse(savedFilters) : filters
+      );
+      const initialApiUrl = `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`;
+      setApiUrl(initialApiUrl);
+      localStorage.setItem("apiUrl", initialApiUrl);
+    }
+
     isInitialLoad.current = false;
   }, [setApiUrl]);
 
@@ -74,7 +81,7 @@ export default function SideBar({ initialCategory }) {
       const groupValues = prevFilters[groupName];
       const newValues = groupValues.includes(value)
         ? groupValues.filter((v) => v !== value)
-        : [value];
+        : [...groupValues, value];
       const updatedFilters = { ...prevFilters, [groupName]: newValues };
       localStorage.setItem("filters", JSON.stringify(updatedFilters));
       return updatedFilters;
@@ -97,9 +104,9 @@ export default function SideBar({ initialCategory }) {
   useEffect(() => {
     if (!isInitialLoad.current) {
       const query = buildQuery(caratWeight, filters);
-      setApiUrl(
-        `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`
-      );
+      const newApiUrl = `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`;
+      setApiUrl(newApiUrl);
+      localStorage.setItem("apiUrl", newApiUrl);
     }
   }, [caratWeight, filters, setApiUrl]);
 
