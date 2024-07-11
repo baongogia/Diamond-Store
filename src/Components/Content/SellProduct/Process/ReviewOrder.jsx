@@ -69,18 +69,18 @@ export default function ReviewOrder() {
                     <div className="flex flex-col justify-between h-14">
                       <div className="text uppercase">shipping address</div>
                       <div className="">
-                        {userData.Gender ? "Mr." : "Mrs."}
-                        {userData.FirstName} {userData.LastName}
+                        {userData?.Gender ? "Mr." : "Mrs."}
+                        {userData?.FirstName} {userData?.LastName}
                       </div>
                     </div>
                     <div className="h-10 title-link">Enternity</div>
                   </div>
-                  <div className="">{userData.Address}</div>
-                  <div className="">{userData.Email}</div>
+                  <div className="">{userData?.Address}</div>
+                  <div className="">{userData?.Email}</div>
                   <div className="">Ho Chi Minh city | Viet Nam</div>
                   <div className="">
                     {" "}
-                    {`<`}+84{`>`} {userData.PhoneNumber}
+                    {`<`}+84{`>`} {userData?.PhoneNumber}
                   </div>
                 </div>
                 <div className="w-full h-[25%] flex flex-col justify-between font-serif">
@@ -99,9 +99,9 @@ export default function ReviewOrder() {
                 <div className="w-[80%] pointer-events-none mt-5">
                   <div className="opacity-60">Billing Address</div>
                   <Select
-                    placeholder={`${userData.Gender ? "Mr." : "Mrs."} ${
-                      userData.FirstName
-                    } ${userData.LastName} ${userData.Address}`}
+                    placeholder={`${userData?.Gender ? "Mr." : "Mrs."} ${
+                      userData?.FirstName
+                    } ${userData?.LastName} ${userData?.Address}`}
                     className="text"
                   />
                 </div>
