@@ -19,7 +19,7 @@ export default function SelectProduct({ details }) {
   const [showCer, setShowCer] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [showVid, setShowVid] = useState(false);
-  const [gem, setGem] = useState();
+  const [gem, setGem] = useState(null); // Ensure gem is initialized as null
   const { setShowCart, addToCart, isProductInCart } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist, isInWishlist } =
     useContext(WishlistContext);
