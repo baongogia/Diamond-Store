@@ -24,25 +24,35 @@ export default function SelectProduct({ details }) {
   const { addToWishlist, removeFromWishlist, isInWishlist } =
     useContext(WishlistContext);
   const isAvailable = details.Status;
+
   // Hold wishlist icon;
   useEffect(() => {
     setRedHeart(isInWishlist(details.ProductId));
   }, [isInWishlist, details.ProductId]);
-  //  Get original size
+
+  // Get original size
   useEffect(() => {
     if (oriSize) {
       setSize({ value: oriSize, label: oriSize.toString() });
     }
   }, [oriSize]);
+
   // Original price
   const oriPrice = details.ProductPrice;
+
   // Price up
   const calculatePrice = (selectedSize) => {
     return details.UnitSizePrice * (selectedSize - details.ProductSize);
   };
+
   // GetGemInfo
   useEffect(() => {
     const fetchGemDetails = async () => {
+      if (!details.GemId) {
+        console.error("GemId is undefined or null");
+        return;
+      }
+
       try {
         const response = await fetch(
           `https://diamondstoreapi.azurewebsites.net/api/Gems/${details.GemId}`
@@ -59,6 +69,7 @@ export default function SelectProduct({ details }) {
 
     fetchGemDetails();
   }, [details.GemId]);
+
   // Calculate price
   const selectedSize = size ? size.value : oriSize;
   const price =
@@ -69,6 +80,7 @@ export default function SelectProduct({ details }) {
   const formatPrice = (price) => {
     return price ? parseFloat(price).toFixed(2) + "$" : "";
   };
+
   // Add to cart
   const handleAddToCart = () => {
     if (selectedSize >= oriSize && !isProductInCart(details.ProductId)) {
@@ -92,10 +104,12 @@ export default function SelectProduct({ details }) {
       setShowCart(true);
     }
   };
+
   // Animation
   const handleFlip = () => {
     setIsFlipped(!isFlipped);
   };
+
   // Add to wish list
   const toggleHeart = () => {
     if (isInWishlist(details.ProductId)) {
@@ -114,17 +128,20 @@ export default function SelectProduct({ details }) {
       setRedHeart(true);
     }
   };
+
   // Miss options
   const getMissingSelections = () => {
     let missing = [];
     if (!size) missing.push("Size");
     return missing.join(", ");
   };
+
   const missingSelections = getMissingSelections();
   const missingMessage =
     missingSelections.length === 1
       ? `Please Select: ${missingSelections[0]}`
       : "Please Select Size";
+
   // Size to select
   const options = [
     { value: details.ProductSize, label: `${details.ProductSize}` },
@@ -134,9 +151,11 @@ export default function SelectProduct({ details }) {
     { value: details.ProductSize + 8, label: `${details.ProductSize + 8}` },
     { value: details.ProductSize + 10, label: `${details.ProductSize + 10}` },
   ];
+
   const handleChange = (selectedOption) => {
     setSize(selectedOption);
   };
+
   // Css input box
   const colourStyles = {
     control: (styles, { isFocused }) => ({
