@@ -7,6 +7,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 // import ProductCard from "../Product/ProductCard";
 import HomeCard from "./HomeCard";
+
 export const title = (title, info, shop) => {
   return (
     <div className="flex flex-col justify-center items-center">
@@ -46,8 +47,8 @@ export const title = (title, info, shop) => {
     </div>
   );
 };
+
 export default function HomePage() {
-  // const [topRated, setTopRated] = useState([]);
   const [univer, setUniver] = useState([]);
   // AOS
   useEffect(() => {
@@ -57,25 +58,6 @@ export default function HomePage() {
       offset: 0,
     });
   }, []);
-  // Data
-  // useEffect(() => {
-  //   fetch("https://diamondstoreapi.azurewebsites.net/api/Products/Category/Rings")
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Network response was not ok");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       setTopRated(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(
-  //         "There has been a problem with your fetch operation:",
-  //         error
-  //       );
-  //     });
-  // }, []);
 
   useEffect(() => {
     fetch(
@@ -97,9 +79,9 @@ export default function HomePage() {
         );
       });
   }, []);
+
   return (
     <div className="w-screen font-serif">
-      {/* Part 1 */}
       <IntroVideo />
       <div className="w-full flex flex-col justify-center items-center pt-8">
         {title(
@@ -107,7 +89,6 @@ export default function HomePage() {
           "Share your love with a heartfelt gesture. Eternity creations celebrate the joy of giving.",
           "Shop Gifts"
         )}
-        {/* Part 2 */}
         <div data-aos="fade-up" className="w-[95%] mt-4">
           <img
             src="https://www.cartier.com/on/demandware.static/-/Library-Sites-CartierSharedLibrary-BGTJ/default/dw21c57203/clp/2022/Beautes%20du%20Monde/Landing%20Page/01_HEADER_GOLSHIFTEH_BDM_2560x996%20(1).jpg"
@@ -121,7 +102,6 @@ export default function HomePage() {
             "Shop Accessories"
           )}
         </div>
-        {/* Part 3 */}
         <div className="w-[92%] flex justify-between">
           <div data-aos="fade-right" className="w-[90%] mr-8">
             <img
@@ -150,7 +130,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        {/* Part 4 */}
         <div data-aos="zoom-in" className="w-[95%]">
           <img
             src="https://www.cartier.com/on/demandware.static/-/Library-Sites-CartierSharedLibrary-BGTJ/default/dw82b9c294/clp/2024/le-voyage-recommence/HEADER_MT02_CARTIER_PORTES_2560x996.jpg"
@@ -164,69 +143,20 @@ export default function HomePage() {
             )}
           </div>
         </div>
-        {/* Part 5 */}
-        {/* <div className="text uppercase text-[1.6em] mt-10 mb-8">
-          Ring: 100 years of an icon
-        </div>
-        <div data-aos="fade-up" className="flex w-[90%] h-full justify-between">
-          {topRated.slice(0, 4).map((item) => (
-            <ProductCard
-              key={item.id}
-              id={item.ProductId}
-              img={item.Image}
-              hovimg={item.Image}
-              name={item.ProductName}
-              material={item.Material}
-              price={parseFloat(item.ProductPrice).toFixed(2)}
-              mini={false}
-            />
-          ))}
-        </div> */}
-        {/* Part 6 */}
-        {/* <div className="w-[95%] h-[70vh] flex items-center justify-around mt-8">
-          <div
-            style={{
-              backgroundImage: `url("https://www.cartier.com/on/demandware.static/-/Library-Sites-CartierSharedLibrary-BGTJ/default/dw5e9337af/homepage/2024/MAY%20HP/W1/GENERIC_240312_TRINITY_STORIES_VISUEL_GENERIQUE_1920X1494.jpg")`,
-            }}
-            data-aos="fade-up"
-            className="w-[54%] h-full bg-cover bg-center bg-no-repeat"
-          ></div>
-          <div className="">
-            <div className="flex flex-col items-start">
-              <div
-                data-aos="fade-up"
-                data-aos-duration="1000"
-                className="uppercase text-[1.6em] text tracking-wide mb-3"
-              >
-                trinity stories
-              </div>
-              <div
-                data-aos="fade-up"
-                data-aos-duration="1300"
-                className="tracking-wide mb-3 text-center"
-              >
-                Month by month, Eternity reveals the hidden history of Trinity
-                in 11 episodes.
-              </div>
-              <div
-                data-aos="fade-up"
-                data-aos-duration="1500"
-                className="title-link h-10 mb-3 cursor-pointer"
-              >
-                Discover
-              </div>
-            </div>
-          </div>
-        </div> */}
-        {/* Part 7 */}
         <div className="text text-[2em] mt-14 mb-5">
           Enter the Eternity universe
         </div>
         <div className="w-[90%]">
           <Slider {...settings}>
-            {univer.map((item) => (
-              <HomeCard key={item.id} bg={item.Image} />
-            ))}
+            {univer.map((item) =>
+              item && item.Image ? (
+                <HomeCard key={item.id} bg={item.Image} />
+              ) : (
+                <div key={item.id} className="error">
+                  Image not available
+                </div>
+              )
+            )}
           </Slider>
         </div>
         <div
@@ -239,6 +169,7 @@ export default function HomePage() {
     </div>
   );
 }
+
 // Slider Control
 function SampleNextArrow(props) {
   const { onClick } = props;
@@ -252,6 +183,7 @@ function SampleNextArrow(props) {
     </div>
   );
 }
+
 function SamplePrevArrow(props) {
   const { onClick } = props;
   return (
@@ -264,6 +196,7 @@ function SamplePrevArrow(props) {
     </div>
   );
 }
+
 const settings = {
   dots: false,
   infinite: false,
