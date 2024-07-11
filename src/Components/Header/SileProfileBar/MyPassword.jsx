@@ -56,7 +56,7 @@ export default function MyPassword() {
 
     try {
       const response = await fetch(
-        `https://localhost:7292/api/Accounts/forgot-password`,
+        `https://diamondstoreapi.azurewebsites.net/api/Accounts/forgot-password`,
         {
           method: "POST",
           headers: {

@@ -25,7 +25,9 @@ export default function OrderDetails() {
 
   // Fetch Data
   useEffect(() => {
-    fetch("https://localhost:7292/api/Products/Category/Necklaces")
+    fetch(
+      "https://diamondstoreapi.azurewebsites.net/api/Products/Category/Necklaces"
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -70,7 +72,7 @@ export default function OrderDetails() {
   const fetchLatestOrder = async () => {
     try {
       const response = await axios.get(
-        `https://localhost:7292/api/Order/getOrderInfo?id=${order.OrderID}`
+        `https://diamondstoreapi.azurewebsites.net/api/Order/getOrderInfo?id=${order.OrderID}`
       );
       if (response.data) {
         setOrder(response.data);
@@ -96,7 +98,7 @@ export default function OrderDetails() {
   const cancelProduct = async () => {
     try {
       const response = await axios.put(
-        `https://localhost:7292/api/Order/CancelOrder?id=${order.OrderID}`
+        `https://diamondstoreapi.azurewebsites.net/api/Order/CancelOrder?id=${order.OrderID}`
       );
       console.log("Cancel successful!");
       if (response) {

@@ -42,7 +42,7 @@ export default function HistoryOrderDetails() {
     const fetchSimilarProducts = async () => {
       try {
         const response = await fetch(
-          "https://localhost:7292/api/Products/Category/Necklaces"
+          "https://diamondstoreapi.azurewebsites.net/api/Products/Category/Necklaces"
         );
         if (!response.ok) throw new Error("Network response was not ok");
         const data = await response.json();
@@ -58,7 +58,7 @@ export default function HistoryOrderDetails() {
     const fetchOrderHistory = async () => {
       try {
         const response = await fetch(
-          `https://localhost:7292/api/Order/getOrderInfo?id=${id}`
+          `https://diamondstoreapi.azurewebsites.net/api/Order/getOrderInfo?id=${id}`
         );
         if (!response.ok)
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -77,7 +77,7 @@ export default function HistoryOrderDetails() {
   const cancelProduct = async () => {
     try {
       const response = await axios.put(
-        `https://localhost:7292/api/Order/CancelOrder?id=${id}`
+        `https://diamondstoreapi.azurewebsites.net/api/Order/CancelOrder?id=${id}`
       );
       console.log("Cancel successful!");
       if (response) {

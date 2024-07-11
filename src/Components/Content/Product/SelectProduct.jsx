@@ -45,7 +45,7 @@ export default function SelectProduct({ details }) {
     const fetchGemDetails = async () => {
       try {
         const response = await fetch(
-          `https://localhost:7292/api/Gems/${details.GemId}`
+          `https://diamondstoreapi.azurewebsites.net/api/Gems/${details.GemId}`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

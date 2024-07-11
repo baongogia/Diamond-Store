@@ -59,7 +59,7 @@ export default function HomePage() {
   }, []);
   // Data
   // useEffect(() => {
-  //   fetch("https://localhost:7292/api/Products/Category/Rings")
+  //   fetch("https://diamondstoreapi.azurewebsites.net/api/Products/Category/Rings")
   //     .then((response) => {
   //       if (!response.ok) {
   //         throw new Error("Network response was not ok");
@@ -78,7 +78,9 @@ export default function HomePage() {
   // }, []);
 
   useEffect(() => {
-    fetch("https://localhost:7292/api/Products/Category/Bracelets")
+    fetch(
+      "https://diamondstoreapi.azurewebsites.net/api/Products/Category/Bracelets"
+    )
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

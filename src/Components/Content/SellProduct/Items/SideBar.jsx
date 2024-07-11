@@ -41,7 +41,9 @@ export default function SideBar({ initialCategory }) {
       savedCaratWeight ? JSON.parse(savedCaratWeight) : caratWeight,
       savedFilters ? JSON.parse(savedFilters) : filters
     );
-    setApiUrl(`https://localhost:7292/api/Products?${query}`);
+    setApiUrl(
+      `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`
+    );
     isInitialLoad.current = false;
   }, [setApiUrl]);
 
@@ -95,7 +97,9 @@ export default function SideBar({ initialCategory }) {
   useEffect(() => {
     if (!isInitialLoad.current) {
       const query = buildQuery(caratWeight, filters);
-      setApiUrl(`https://localhost:7292/api/Products?${query}`);
+      setApiUrl(
+        `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`
+      );
     }
   }, [caratWeight, filters, setApiUrl]);
 

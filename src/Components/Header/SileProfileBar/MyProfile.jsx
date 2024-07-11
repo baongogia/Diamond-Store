@@ -61,7 +61,7 @@ export default function MyProfile() {
 
     try {
       const response = await fetch(
-        `https://localhost:7292/api/Customers/UpdateCustomer/${userData.CustomerId}`,
+        `https://diamondstoreapi.azurewebsites.net/api/Customers/UpdateCustomer/${userData.CustomerId}`,
         {
           method: "PUT",
           headers: {

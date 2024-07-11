@@ -14,7 +14,7 @@ export default function MyOrder() {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://localhost:7292/api/Order/OrderHistory?username=${username}`,
+          `https://diamondstoreapi.azurewebsites.net/api/Order/OrderHistory?username=${username}`,
           {
             method: "GET",
             headers: {

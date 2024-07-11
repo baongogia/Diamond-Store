@@ -22,7 +22,7 @@ export default function LoginPage() {
   const handleLogin = async (username, password) => {
     try {
       const response = await axios.post(
-        "https://localhost:7292/api/Accounts/login",
+        "https://diamondstoreapi.azurewebsites.net/api/Accounts/login",
         {
           username,
           password,

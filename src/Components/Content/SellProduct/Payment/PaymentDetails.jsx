@@ -28,7 +28,7 @@ export default function PaymentDetails({ title, linkto }) {
   const changeProductStatus = async (productIds) => {
     try {
       const response = await fetch(
-        `https://localhost:7292/api/Products/UpdateStatus`,
+        `https://diamondstoreapi.azurewebsites.net/api/Products/UpdateStatus`,
         {
           method: "PUT",
           headers: {
@@ -65,7 +65,7 @@ export default function PaymentDetails({ title, linkto }) {
 
     try {
       const response = await fetch(
-        "https://localhost:7292/api/Order/createorder",
+        "https://diamondstoreapi.azurewebsites.net/api/Order/createorder",
         {
           method: "POST",
           headers: {

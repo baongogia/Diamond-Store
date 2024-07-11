@@ -13,7 +13,7 @@ export default function ProductPage() {
   const [productDetails, setProductDetails] = useState([]);
   // Data
   useEffect(() => {
-    fetch(`https://localhost:7292/api/Products/${id}`)
+    fetch(`https://diamondstoreapi.azurewebsites.net/api/Products/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -32,7 +32,7 @@ export default function ProductPage() {
   }, [id]);
   // Succgest
   useEffect(() => {
-    fetch(`https://localhost:7292/api/Products`)
+    fetch(`https://diamondstoreapi.azurewebsites.net/api/Products`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

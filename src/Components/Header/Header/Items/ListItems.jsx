@@ -11,7 +11,7 @@ export default function ListItems({ titles }) {
     Array(titles.length).fill(false)
   );
   const [apiUrl, setApiUrl] = useState(
-    "https://localhost:7292/api/Products/Category/Rings"
+    "https://diamondstoreapi.azurewebsites.net/api/Products/Category/Rings"
   );
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -41,19 +41,23 @@ export default function ListItems({ titles }) {
     let newCategory;
     switch (index) {
       case 0:
-        newApiUrl = "https://localhost:7292/api/Products/Category/Rings";
+        newApiUrl =
+          "https://diamondstoreapi.azurewebsites.net/api/Products/Category/Rings";
         newCategory = "Rings";
         break;
       case 1:
-        newApiUrl = "https://localhost:7292/api/Products/Category/Earrings";
+        newApiUrl =
+          "https://diamondstoreapi.azurewebsites.net/api/Products/Category/Earrings";
         newCategory = "Earrings";
         break;
       case 2:
-        newApiUrl = "https://localhost:7292/api/Products/Category/Bracelets";
+        newApiUrl =
+          "https://diamondstoreapi.azurewebsites.net/api/Products/Category/Bracelets";
         newCategory = "Bracelets";
         break;
       case 3:
-        newApiUrl = "https://localhost:7292/api/Products/Category/Necklaces";
+        newApiUrl =
+          "https://diamondstoreapi.azurewebsites.net/api/Products/Category/Necklaces";
         newCategory = "Necklaces";
         break;
       default:

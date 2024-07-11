@@ -121,7 +121,7 @@ export default function RegisterForm() {
     try {
       // Kiểm tra URL và endpoint API
       const response = await axios.post(
-        "https://localhost:7292/api/Accounts/register",
+        "https://diamondstoreapi.azurewebsites.net/api/Accounts/register",
         formData
       );
       console.log("Registration successful!", response.data);

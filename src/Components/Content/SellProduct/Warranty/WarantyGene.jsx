@@ -16,7 +16,7 @@ export default function WarrantyGene({ orderId }) {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://localhost:7292/api/Order/GetOrderInfo?id=${orderId}`,
+          `https://diamondstoreapi.azurewebsites.net/api/Order/GetOrderInfo?id=${orderId}`,
           {
             method: "GET",
             headers: {
@@ -44,7 +44,7 @@ export default function WarrantyGene({ orderId }) {
     const getWarrantyInfo = async (orderDetailID) => {
       try {
         const response = await fetch(
-          `https://localhost:7292/api/Warranty/WarrantyInfo?orderDetailID=${orderDetailID}`,
+          `https://diamondstoreapi.azurewebsites.net/api/Warranty/WarrantyInfo?orderDetailID=${orderDetailID}`,
           {
             method: "GET",
             headers: {

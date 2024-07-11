@@ -13,7 +13,7 @@ export default function SearchList() {
   const fetchData = async (searchString) => {
     try {
       const response = await axios.get(
-        `https://localhost:7292/api/Products/ProductName/${searchString}`
+        `https://diamondstoreapi.azurewebsites.net/api/Products/ProductName/${searchString}`
       );
       setProductList(response.data);
     } catch (error) {
