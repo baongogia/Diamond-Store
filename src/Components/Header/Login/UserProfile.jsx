@@ -90,12 +90,12 @@ export default function UserProfile() {
                   <div className="text uppercase">My profile</div>
                   <div className="">
                     {userData.Gender ? "Mr. " : "Mrs. "}
-                    {userData.given_name
-                      ? userData.given_name
-                      : userData.FirstName + " " + userData.LastName}
+                    {userData?.given_name
+                      ? userData?.given_name
+                      : userData?.FirstName + " " + userData?.LastName}
                   </div>
                   <div className="">
-                    Email: {userData.email || `${userData.Email}`}
+                    Email: {userData?.email || `${userData?.Email}`}
                   </div>
 
                   <div className="flex items-center">
@@ -103,13 +103,13 @@ export default function UserProfile() {
                     <div
                       style={{
                         backgroundImage: `url(${
-                          userData.Ranking === "Bronze"
+                          userData?.Ranking === "Bronze"
                             ? "https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/1.png?v=9"
-                            : userData.Ranking === "Silver"
+                            : userData?.Ranking === "Silver"
                             ? "https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/3.png?v=9"
-                            : userData.Ranking === "Gold"
+                            : userData?.Ranking === "Gold"
                             ? "https://theglobalgaming.com/assets/images/article/Gold.webp"
-                            : userData.Ranking === "Diamond"
+                            : userData?.Ranking === "Diamond"
                             ? "https://lolg-cdn.porofessor.gg/img/s/league-icons-v3/160/5.png?v=9"
                             : ""
                         })`,
