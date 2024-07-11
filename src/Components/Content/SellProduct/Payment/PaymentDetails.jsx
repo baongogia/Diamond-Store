@@ -51,7 +51,7 @@ export default function PaymentDetails({ title, linkto }) {
   // Create Order
   const createOrder = async () => {
     const orderData = {
-      Username: userData.UserName,
+      Username: userData?.UserName,
       OrderDate: new Date().toISOString(),
       PaymentMethod: paymentMethod,
       Products: cartItems.map((item) => ({
@@ -96,7 +96,7 @@ export default function PaymentDetails({ title, linkto }) {
     0
   );
   const subtotal = total;
-  const discount = userData.DiscountRate * total;
+  const discount = (userData?.DiscountRate || 0) * total;
   const finalPrice = total - discount;
 
   // Handle Click
