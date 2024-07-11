@@ -19,13 +19,13 @@ export default function SelectProduct({ details }) {
   const [showCer, setShowCer] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [showVid, setShowVid] = useState(false);
-  const [gem, setGem] = useState(null);
+  const [gem, setGem] = useState();
   const { setShowCart, addToCart, isProductInCart } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist, isInWishlist } =
     useContext(WishlistContext);
   const isAvailable = details.Status;
 
-  // Hold wishlist icon
+  // Hold wishlist icon;
   useEffect(() => {
     setRedHeart(isInWishlist(details.ProductId));
   }, [isInWishlist, details.ProductId]);
@@ -48,7 +48,7 @@ export default function SelectProduct({ details }) {
   // GetGemInfo
   useEffect(() => {
     const fetchGemDetails = async () => {
-      if (!details.GemId) {
+      if (!details?.GemId) {
         console.error("GemId is undefined or null");
         return;
       }
@@ -68,7 +68,7 @@ export default function SelectProduct({ details }) {
     };
 
     fetchGemDetails();
-  }, [details.GemId]);
+  }, [details?.GemId]);
 
   // Calculate price
   const selectedSize = size ? size.value : oriSize;
@@ -289,7 +289,7 @@ export default function SelectProduct({ details }) {
           } }`}
         >
           <div
-            className={`text uppercase ${
+            className={`text-uppercase ${
               size && isAvailable && !isProductInCart(details.ProductId)
                 ? "text-green-50"
                 : "text-gray-700 group-hover:text-white group-hover:pointer-events-none"
@@ -351,8 +351,8 @@ export default function SelectProduct({ details }) {
           <div className="absolute inset-0 flex justify-center items-center">
             <div className="w-[44%] h-[81%] relative -bottom-11 -left-64">
               <div className="absolute top-10 right-6 Mfont">
-                {details.GemId}
-                {details.MaterialId}
+                {details?.GemId}
+                {details?.MaterialId}
               </div>
               <div className="absolute top-16 right-6 Mfont">{gem?.Shape}</div>
               <div className="absolute top-36 right-4 Mfont">
@@ -379,8 +379,8 @@ export default function SelectProduct({ details }) {
             </div>
           </div>
           <div className="absolute left-[69.7%] top-10">
-            {details.GemId}
-            {details.MaterialId}
+            {details?.GemId}
+            {details?.MaterialId}
           </div>
           <div
             onClick={() => {
