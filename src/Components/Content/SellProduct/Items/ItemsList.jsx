@@ -38,8 +38,9 @@ export default function ItemsList() {
             throw new Error("Network response was not ok");
           }
           const data = await response.json();
-          cache.current[apiUrl] = data; // Cache the response
-          setDataFil(Array.isArray(data) ? data : []);
+          const products = data.Products || []; // Truy cập vào thuộc tính Products
+          cache.current[apiUrl] = products; // Cache the response
+          setDataFil(Array.isArray(products) ? products : []);
         } catch (error) {
           console.error("Failed to fetch data:", error);
           setDataFil([]);
@@ -88,7 +89,7 @@ export default function ItemsList() {
         ) : (
           Array.isArray(dataFil) &&
           dataFil.map((item, index) => (
-            <React.Fragment key={item.id}>
+            <React.Fragment key={item.ProductId}>
               {/* Banner */}
               {index === 6 && (
                 <div className="col-span-2 w-full mt-2 ml-2">
@@ -126,7 +127,7 @@ export default function ItemsList() {
               )}
               {/* Products */}
               <ProductShopCard
-                key={item.id}
+                key={item.ProductId}
                 id={item.ProductId}
                 img={item.Image}
                 name={item.ProductName}
