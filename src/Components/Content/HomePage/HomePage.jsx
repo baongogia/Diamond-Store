@@ -148,12 +148,12 @@ export default function HomePage() {
         </div>
         <div className="w-[90%]">
           <Slider {...settings}>
-            {univer.map((item) =>
-              item && item.Image ? (
-                <HomeCard key={item.id} bg={item.Image} />
+            {univer.map((item, index) =>
+              item ? (
+                <HomeCard key={index} bg={item.Image || ""} />
               ) : (
-                <div key={item.id} className="error">
-                  Image not available
+                <div key={index} className="error">
+                  Data not available
                 </div>
               )
             )}
