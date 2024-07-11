@@ -28,7 +28,8 @@ export default function ItemsList() {
     const fetchData = async () => {
       setLoading(true);
       if (cache.current[apiUrl]) {
-        setDataFil(cache.current[apiUrl]);
+        const cachedData = cache.current[apiUrl];
+        setDataFil(Array.isArray(cachedData) ? cachedData : []);
         setLoading(false);
       } else {
         try {
@@ -38,9 +39,10 @@ export default function ItemsList() {
           }
           const data = await response.json();
           cache.current[apiUrl] = data; // Cache the response
-          setDataFil(data);
+          setDataFil(Array.isArray(data) ? data : []);
         } catch (error) {
           console.error("Failed to fetch data:", error);
+          setDataFil([]);
         } finally {
           setLoading(false);
         }
@@ -84,6 +86,7 @@ export default function ItemsList() {
             <RingLoader size={100} color="#54cc26" />
           </div>
         ) : (
+          Array.isArray(dataFil) &&
           dataFil.map((item, index) => (
             <React.Fragment key={item.id}>
               {/* Banner */}
