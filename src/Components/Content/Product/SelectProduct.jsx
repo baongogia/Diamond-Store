@@ -19,13 +19,13 @@ export default function SelectProduct({ details }) {
   const [showCer, setShowCer] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [showVid, setShowVid] = useState(false);
-  const [gem, setGem] = useState();
+  const [gem, setGem] = useState(null);
   const { setShowCart, addToCart, isProductInCart } = useContext(CartContext);
   const { addToWishlist, removeFromWishlist, isInWishlist } =
     useContext(WishlistContext);
   const isAvailable = details.Status;
 
-  // Hold wishlist icon;
+  // Hold wishlist icon
   useEffect(() => {
     setRedHeart(isInWishlist(details.ProductId));
   }, [isInWishlist, details.ProductId]);
