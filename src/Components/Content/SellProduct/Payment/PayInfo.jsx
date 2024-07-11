@@ -33,7 +33,7 @@ export default function PayInfo() {
             type="radio"
             name="choice"
             value="option1"
-            checked={userData.Gender}
+            checked={userData?.Gender}
           />
           <label htmlFor="option1">Mr</label>
           <br></br>
@@ -42,7 +42,7 @@ export default function PayInfo() {
             type="radio"
             name="choice"
             value="option2"
-            checked={!userData.Gender}
+            checked={!userData?.Gender}
           />
           <label htmlFor="option2">Mrs</label>
           <br></br>
@@ -51,7 +51,7 @@ export default function PayInfo() {
             type="radio"
             name="choice"
             value="option3"
-            checked={!userData.Gender}
+            checked={!userData?.Gender}
           />
           <label htmlFor="option3">Miss</label>
           <br></br>
@@ -61,19 +61,19 @@ export default function PayInfo() {
         type="text"
         label="First Name"
         placeholder="GIA"
-        value={userData.FirstName}
+        value={userData?.FirstName}
       />
       <Input
         type="text"
         label="Last Name"
         placeholder="BAO"
-        value={userData.LastName}
+        value={userData?.LastName}
       />
       <Input
         type="text"
         label="Address Line 1"
         placeholder="Address Line 1"
-        value={userData.Address}
+        value={userData?.Address}
       />
       <Input type="text" label="Address Line 2" placeholder="Address Line 2" />
       <div className="-mt-4 mb-2">
