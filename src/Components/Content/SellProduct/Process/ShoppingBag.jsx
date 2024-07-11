@@ -16,7 +16,7 @@ export default function ShoppingBag() {
     (total, item) => total + item.price * item.quantity,
     0
   );
-  const discount = userData.DiscountRate * subtotal;
+  const discount = userData?.DiscountRate * subtotal;
 
   useEffect(() => {
     const handleScroll = () => {
