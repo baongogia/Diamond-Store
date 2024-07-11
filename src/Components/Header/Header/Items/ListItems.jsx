@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function ListItems({ titles }) {
   const [data, setData] = useState(null);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Rings");
   const [activeStates, setActiveStates] = useState(
     Array(titles.length).fill(false)
   );
@@ -25,6 +25,7 @@ export default function ListItems({ titles }) {
       }
       const data = await response.json();
       setData(data);
+      localStorage.setItem(url, JSON.stringify(data));
     } catch (err) {
       console.error("There has been a problem with your fetch operation:", err);
     } finally {
@@ -33,7 +34,12 @@ export default function ListItems({ titles }) {
   };
 
   useEffect(() => {
-    fetchData(apiUrl, setData, setLoading);
+    const cachedData = localStorage.getItem(apiUrl);
+    if (cachedData) {
+      setData(JSON.parse(cachedData));
+    } else {
+      fetchData(apiUrl, setData, setLoading);
+    }
   }, [apiUrl]);
 
   const handleMouseEnter = (index) => {
@@ -83,10 +89,6 @@ export default function ListItems({ titles }) {
   return (
     <div className="absolute top-8 w-[90%] h-[85%] flex flex-col justify-center items-center">
       {/* Nav list */}
-      {/* data-aos="fade-zoom-in"
-     data-aos-easing="ease-in-back"
-     data-aos-delay="300"
-     data-aos-offset="0" */}
       <ul className=" uppercase flex justify-around w-[77%] mt-14 border-b-[0.1em] border-b-black border-opacity-30 ">
         {titles.map((title, index) => (
           <li
