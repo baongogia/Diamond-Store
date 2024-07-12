@@ -1,7 +1,14 @@
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { UserContext } from "../../../Header/Login/UserContext";
 import HistoryProductCard from "../../Product/HistoryProductCard";
-import { RingLoader } from "react-spinners";
+import {
+  RingLoader,
+  HashLoader,
+  SyncLoader,
+  PacmanLoader,
+  ClockLoader,
+  BounceLoader,
+} from "react-spinners";
 import { CSSTransition } from "react-transition-group";
 import AOS from "aos";
 
@@ -74,13 +81,50 @@ export default function OrderHistory() {
     return (
       <div
         onClick={() => setSelectedStatus(name)}
-        className={`w-[15%] cursor-pointer h-[68%] border border-green-700 flex justify-center items-center rounded-xl ${
+        className={`relative w-32 h-32 cursor-pointer rounded-full border border-green-700 flex justify-center items-center ${
           selectedStatus === name
             ? "bg-green-400 border border-green-700 shadow-md shadow-green-700"
             : ""
         } hover:shadow-md hover:shadow-green-700 hover:bg-green-400`}
       >
-        {name}
+        <div
+          className={`absolute left-full border-green-700 border-t-2 w-[54%] ${
+            name === "Cancelled" ? "hidden" : ""
+          }`}
+        ></div>
+        <div className="flex flex-col justify-center items-center">
+          {name === "Processing" && <RingLoader size={30} color="#485E2D" />}
+          {name === "Accepted" && <HashLoader size={30} color="#485E2D" />}
+          {name === "Pending Delivery" && (
+            <ClockLoader
+              size={27}
+              cssOverride={{ height: "27px" }}
+              color="#485E2D"
+            />
+          )}
+          {name === "Deliverying" && (
+            <SyncLoader
+              size={8}
+              cssOverride={{ height: "27px" }}
+              color="#485E2D"
+            />
+          )}
+          {name === "Deliveried" && (
+            <BounceLoader
+              size={30}
+              cssOverride={{ height: "27px" }}
+              color="#485E2D"
+            />
+          )}
+          {name === "Cancelled" && (
+            <PacmanLoader
+              cssOverride={{ height: "27px" }}
+              size={12}
+              color="#485E2D"
+            />
+          )}
+          <div className="">{name}</div>
+        </div>
       </div>
     );
   };
@@ -88,8 +132,8 @@ export default function OrderHistory() {
   return (
     <div className="">
       {/* NavBar */}
-      <div className="w-screen flex justify-center items-center h-20">
-        <div className="w-[81%] font-serif h-[80%] border border-green-700 flex justify-around items-center rounded-md">
+      <div className="w-screen flex justify-center items-center h-20 mt-10">
+        <div className="w-[81%] font-serif flex justify-around items-center rounded-md">
           {navStatus("Processing")}
           {navStatus("Accepted")}
           {navStatus("Pending Delivery")}
@@ -162,7 +206,7 @@ export default function OrderHistory() {
                 })
               ) : (
                 <div className="w-full h-[60vh] flex flex-col justify-center items-center">
-                  <RingLoader size={100} color="#54cc26" />
+                  Exporting your list order...
                 </div>
               )}
             </div>

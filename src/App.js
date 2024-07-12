@@ -5,6 +5,7 @@ import HideNav from "./Components/Hide/HideFooter";
 import Navbar from "./Components/Header/Header/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 import HideFooter from "./Components/Hide/HideFooter";
+import { RingLoader } from "react-spinners";
 
 // Sử dụng React.lazy để lazy-load các component
 const HomePage = lazy(() => import("./Components/Content/HomePage/HomePage"));
@@ -54,7 +55,13 @@ function App() {
       <HideNav>
         <Navbar />
       </HideNav>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="w-screen h-[80vh] flex justify-center items-center">
+            <RingLoader size={100} color="#54cc26" />
+          </div>
+        }
+      >
         <Routes>
           <Route
             path="/"
