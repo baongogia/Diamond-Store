@@ -132,7 +132,7 @@ export default function OrderHistory() {
   return (
     <div className="">
       {/* NavBar */}
-      <div className="w-screen flex justify-center items-center h-20 mt-10">
+      <div className="w-screen flex justify-center items-center h-20 mt-10 mb-16">
         <div className="w-[81%] font-serif flex justify-around items-center rounded-md">
           {navStatus("Processing")}
           {navStatus("Accepted")}
