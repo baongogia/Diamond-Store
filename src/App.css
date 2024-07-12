@@ -36,6 +36,17 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+.univer {
+  background: linear-gradient(
+    90deg,
+    #0f0f91,
+    #a064d9
+  ); /* Sử dụng màu xanh dương và tím */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .magic {
   background: linear-gradient(90deg, #290f93, #66fae9);
   background-clip: text;

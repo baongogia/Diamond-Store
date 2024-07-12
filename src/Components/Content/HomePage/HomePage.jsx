@@ -7,6 +7,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 // import ProductCard from "../Product/ProductCard";
 import HomeCard from "./HomeCard";
+import { RingLoader } from "react-spinners";
 
 export const title = (title, info, shop) => {
   return (
@@ -50,6 +51,7 @@ export const title = (title, info, shop) => {
 
 export default function HomePage() {
   const [univer, setUniver] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   // AOS
   useEffect(() => {
     AOS.init({
@@ -71,6 +73,7 @@ export default function HomePage() {
       })
       .then((data) => {
         setUniver(data);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(
@@ -143,21 +146,23 @@ export default function HomePage() {
             )}
           </div>
         </div>
-        <div className="text text-[2em] mt-14 mb-5">
+        <div className="text uppercase text-[2em] mt-14 mb-5 univer">
           Enter the Eternity universe
         </div>
         <div className="w-[90%]">
-          <Slider {...settings}>
-            {univer.map((item, index) =>
-              item ? (
-                <HomeCard key={index} bg={item.Image || ""} />
-              ) : (
-                <div key={index} className="error">
-                  Data not available
-                </div>
-              )
-            )}
-          </Slider>
+          {isLoading ? (
+            <div className="w-full h-[40vh] flex justify-center items-center">
+              <RingLoader size={95} color="#54cc26" />
+            </div>
+          ) : univer.length > 1 ? (
+            <Slider {...settings}>
+              {univer.map((item, index) => (
+                <HomeCard key={index} bg={item?.Image || ""} />
+              ))}
+            </Slider>
+          ) : (
+            <div className=""></div>
+          )}
         </div>
         <div
           className="bg-black text-center text-white w-[10%] font-semibold px-4 py-2 uppercase text mt-4 mb-5
