@@ -132,7 +132,7 @@ export default function OrderHistory() {
   return (
     <div className="">
       {/* NavBar */}
-      <div className="w-screen flex justify-center items-center h-20 mt-10 mb-16">
+      <div className="w-screen flex justify-center items-center h-20 mt-10 mb-16 mr-6">
         <div className="w-[81%] font-serif flex justify-around items-center rounded-md">
           {navStatus("Processing")}
           {navStatus("Accepted")}
@@ -205,7 +205,7 @@ export default function OrderHistory() {
                   );
                 })
               ) : (
-                <div className="w-full h-[60vh] flex flex-col justify-center items-center">
+                <div className="w-full h-[50vh] flex flex-col justify-center items-center">
                   Exporting your list order...
                 </div>
               )}
