@@ -40,7 +40,7 @@ export default function ProductPage() {
         return response.json();
       })
       .then((data) => {
-        setSuggest(data);
+        setSuggest(data.Products);
       })
       .catch((error) => {
         console.error(
@@ -169,20 +169,26 @@ export default function ProductPage() {
           <div className="w-full flex flex-col justify-center items-center mt-20">
             <div className="text text-[1.6em] mb-8">YOU MAY ALSO LIKE</div>
             <div className="w-[70%]">
-              <Slider {...settings}>
-                {suggest.map((item, index) => (
-                  <ProductCard
-                    key={index}
-                    id={item.ProductId}
-                    img={item.Image}
-                    hovimg={item.Image}
-                    name={item.ProductName}
-                    material={item.Material}
-                    price={parseFloat(item.ProductPrice).toFixed(2)}
-                    mini={true}
-                  />
-                ))}
-              </Slider>
+              {suggest.length > 1 ? (
+                <Slider {...settings}>
+                  {suggest.map((item, index) => (
+                    <ProductCard
+                      key={index}
+                      id={item.ProductId}
+                      img={item.Image}
+                      hovimg={item.Image}
+                      name={item.ProductName}
+                      material={item.Material}
+                      price={parseFloat(item.ProductPrice).toFixed(2)}
+                      mini={true}
+                    />
+                  ))}
+                </Slider>
+              ) : (
+                <div className="w-full h-[30vh] flex justify-center items-center">
+                  <RingLoader size={70} color="#54cc26" />
+                </div>
+              )}
             </div>
           </div>
           <div className="w-full flex flex-col justify-center items-center">
