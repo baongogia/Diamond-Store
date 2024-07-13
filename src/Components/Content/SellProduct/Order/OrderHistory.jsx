@@ -205,7 +205,7 @@ export default function OrderHistory() {
                   );
                 })
               ) : (
-                <div className="w-full h-[50vh] flex flex-col justify-center items-center">
+                <div className="w-full h-[45vh] flex flex-col justify-center items-center">
                   Exporting your list order...
                 </div>
               )}

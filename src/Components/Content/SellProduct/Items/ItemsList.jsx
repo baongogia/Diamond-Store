@@ -138,7 +138,7 @@ export default function ItemsList() {
           ))
         )}
       </div>
-      <div className="mt-12 w-full h-[20vh]">
+      <div className="mt-12 w-[90vw] h-[20vh]">
         <div className="w-full flex flex-col justify-center items-center">
           <img
             src="https://png.pngtree.com/png-vector/20220719/ourmid/pngtree-eternal-love-symbol-heart-infinity-sign-calligraphy-for-declarations-vector-png-image_37918768.png"

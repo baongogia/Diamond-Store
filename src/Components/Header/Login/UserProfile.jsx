@@ -8,6 +8,9 @@ import { WishlistContext } from "../SileProfileBar/WishlistContext";
 import MyPassword from "../SileProfileBar/MyPassword";
 import MyProfile from "../SileProfileBar/MyProfile";
 import MyOrder from "../SileProfileBar/MyOrder";
+import MyAddress from "../SileProfileBar/MyAddress";
+import MyCollection from "../SileProfileBar/MyCollection";
+import MySub from "../SileProfileBar/MySub";
 
 export default function UserProfile() {
   const { userData } = useContext(UserContext);
@@ -209,6 +212,12 @@ export default function UserProfile() {
           {content === "my password" && <MyPassword />}
           {/* Orders */}
           {content === "my orders" && <MyOrder />}
+          {/* Address */}
+          {content === "my addresses" && <MyAddress />}
+          {/* Collection */}
+          {content === "my collection" && <MyCollection />}
+          {/* Subcriptions */}
+          {content === "my subscriptions & interests" && <MySub />}
         </div>
       </div>
     </div>
