@@ -1,16 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ProductCard from "../../Content/Product/ProductCard";
-import { RingLoader } from "react-spinners";
 import Slider from "react-slick";
+import { RingLoader } from "react-spinners";
 
 export default function SearchList() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [timeoutId, updateTimeoutId] = useState();
-  const [productList, setProductList] = useState(null);
+  const [timeoutId, updateTimeoutId] = useState(null);
+  const [productList, setProductList] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  useEffect(() => {
+    return () => clearTimeout(timeoutId); // Clean up timeout on unmount
+  }, [timeoutId]);
+
   const fetchData = async (searchString) => {
+    setLoading(true);
     try {
       const response = await axios.get(
         `https://diamondstoreapi.azurewebsites.net/api/Products/ProductName/${searchString}`
@@ -18,6 +24,8 @@ export default function SearchList() {
       setProductList(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -25,6 +33,12 @@ export default function SearchList() {
     const value = e.target.value;
     clearTimeout(timeoutId);
     setSearchQuery(value);
+    if (value.trim() === "") {
+      setProductList([]);
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
     const timeout = setTimeout(() => fetchData(value), 500);
     updateTimeoutId(timeout);
   };
@@ -101,28 +115,31 @@ export default function SearchList() {
       {/* Search product list */}
       <div
         className={`pl-20 w-full h-screen overflow-hidden bg-white flex justify-between ${
-          productList !== null ? "" : "hidden"
-        } ${searchQuery === "" ? "hidden" : ""}`}
+          productList && productList.length > 0 ? "" : ""
+        }`}
       >
-        {productList !== null ? (
-          <Slider className="w-[68%]" {...settings}>
-            {productList.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.ProductId}
-                img={product.Image}
-                hovimg={product.Image}
-                name={product.ProductName}
-                material={product.Material}
-                price={parseFloat(product.ProductPrice).toFixed(2)}
-                mini={false}
-              />
-            ))}
-          </Slider>
-        ) : (
-          <div className="w-screen h-full flex justify-center items-center">
-            <RingLoader color="#54cc26" />
+        {loading ? (
+          <div className="w-[85vw] h-[40vh] flex justify-center items-center">
+            <RingLoader size={80} color="#54cc26" />
           </div>
+        ) : (
+          productList &&
+          productList.length > 0 && (
+            <Slider className="w-[68%]" {...settings}>
+              {productList.map((product) => (
+                <ProductCard
+                  key={product.ProductId}
+                  id={product.ProductId}
+                  img={product.Image}
+                  hovimg={product.Image}
+                  name={product.ProductName}
+                  material={product.Material}
+                  price={parseFloat(product.ProductPrice).toFixed(2)}
+                  mini={false}
+                />
+              ))}
+            </Slider>
+          )
         )}
         {/* Category */}
         <div className="w-1/4 h-full">
