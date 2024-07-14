@@ -4,7 +4,8 @@ import { CartContext } from "./CartContext";
 import CartItems from "./CartItems";
 
 export default function Cart({ setShowCart, setOverlay }) {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, setShowCart: setShowCartContext } =
+    useContext(CartContext);
   const navigate = useNavigate();
   const [navigateTo, setNavigateTo] = useState(null);
 
@@ -13,13 +14,12 @@ export default function Cart({ setShowCart, setOverlay }) {
     .toFixed(2);
 
   const handleShow = () => {
-    setShowCart(false);
+    setShowCartContext(false);
     setOverlay(false);
   };
 
   const handleLinkClick = (path) => {
-    setShowCart(false);
-    setOverlay(false);
+    handleShow();
     setNavigateTo(path);
   };
 
