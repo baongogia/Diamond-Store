@@ -24,7 +24,11 @@ export default function ListItems({ titles }) {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      setData(data);
+      if (url.includes("/api/Products") && !url.includes("/Category/")) {
+        setData(data.products);
+      } else {
+        setData(data);
+      }
       localStorage.setItem(url, JSON.stringify(data));
     } catch (err) {
       console.error("There has been a problem with your fetch operation:", err);
@@ -36,7 +40,12 @@ export default function ListItems({ titles }) {
   useEffect(() => {
     const cachedData = localStorage.getItem(apiUrl);
     if (cachedData) {
-      setData(JSON.parse(cachedData));
+      const parsedData = JSON.parse(cachedData);
+      if (apiUrl.includes("/api/Products") && !apiUrl.includes("/Category/")) {
+        setData(parsedData.products);
+      } else {
+        setData(parsedData);
+      }
     } else {
       fetchData(apiUrl, setData, setLoading);
     }
@@ -127,7 +136,9 @@ export default function ListItems({ titles }) {
       </div>
       {/* Link shop */}
       <div
-        onClick={() => navigate(`/AllItems/${category}`)}
+        onClick={() => {
+          navigate(`/AllItems/products`);
+        }}
         className="absolute title-link h-10 mb-3 cursor-pointer font-serif -bottom-8"
       >
         View all

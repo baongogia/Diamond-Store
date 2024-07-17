@@ -11,6 +11,7 @@ import MyOrder from "../SileProfileBar/MyOrder";
 import MyAddress from "../SileProfileBar/MyAddress";
 import MyCollection from "../SileProfileBar/MyCollection";
 import MySub from "../SileProfileBar/MySub";
+import PaypalBalance from "../../Content/SellProduct/Payment/PaypalBalance";
 
 export default function UserProfile() {
   const { userData } = useContext(UserContext);
@@ -88,6 +89,7 @@ export default function UserProfile() {
           {/* Overview */}
           {content === "Overview" && (
             <div className="w-[72%] h-[73vh] grid grid-cols-2 font-serif">
+              {/* Profile */}
               <div className="relative w-[95%] h-[95%] border-black border-[0.1em] border-opacity-30">
                 <div className="absolute top-8 left-8 flex flex-col justify-between h-1/2">
                   <div className="text uppercase">My profile</div>
@@ -122,8 +124,12 @@ export default function UserProfile() {
                     {userData.Ranking ? userData.Ranking : ""} (
                     {userData.DiscountRate * 100}% discount for all orders)
                   </div>
+                  <div className="">
+                    <PaypalBalance />
+                  </div>
                 </div>
               </div>
+              {/* Order */}
               <div className="relative w-[95%] h-[95%] border-black border-[0.1em] border-opacity-30">
                 <div className="absolute top-8 w-full left-8 flex flex-col justify-between font-serif">
                   <div className="text uppercase mb-3">My order</div>
@@ -168,6 +174,7 @@ export default function UserProfile() {
                   </Link>
                 </div>
               </div>
+              {/* Wish List */}
               <div className="relative w-[95%] h-[95%] border-black border-[0.1em] border-opacity-30">
                 <div className="absolute top-8 left-8 flex flex-col justify-between h-[25%]">
                   <div className="text uppercase mb-5">My wish list</div>
@@ -192,6 +199,7 @@ export default function UserProfile() {
                   </div>
                 </div>
               </div>
+              {/* Address */}
               <div className="relative w-[95%] h-[95%] border-black border-[0.1em] border-opacity-30">
                 <div className="absolute top-8 left-8 flex flex-col justify-between h-1/4">
                   <div className="text uppercase">My addresses</div>

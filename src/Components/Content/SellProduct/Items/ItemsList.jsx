@@ -10,9 +10,14 @@ import { DataContext } from "../Sort/DataContext";
 export default function ItemsList() {
   const { dataFil, setDataFil, apiUrl } = useContext(DataContext);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const prevApiUrl = useRef("");
   const { sortOption } = useContext(SortingContext);
   const cache = useRef({});
+  const isProductsApi =
+    apiUrl.includes("/api/Products") && !apiUrl.includes("?Category=");
 
   // AOS
   useEffect(() => {
@@ -24,34 +29,36 @@ export default function ItemsList() {
   }, []);
 
   // Fetch data
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      if (cache.current[apiUrl]) {
-        const cachedData = cache.current[apiUrl];
-        setDataFil(Array.isArray(cachedData) ? cachedData : []);
-        setLoading(false);
-      } else {
-        try {
-          const response = await fetch(apiUrl);
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          const data = await response.json();
-          const products = data.Products || []; // Truy cập vào thuộc tính Products
-          cache.current[apiUrl] = products; // Cache the response
-          setDataFil(Array.isArray(products) ? products : []);
-        } catch (error) {
-          console.error("Failed to fetch data:", error);
-          setDataFil([]);
-        } finally {
-          setLoading(false);
+  const fetchData = async (url, page = 1, loadMore = false) => {
+    loadMore ? setLoadingMore(true) : setLoading(true);
+    const fullUrl = isProductsApi ? `${url}?PageNumber=${page}` : url;
+    if (cache.current[fullUrl]) {
+      const cachedData = cache.current[fullUrl];
+      setDataFil((prevData) => [...prevData, ...cachedData.Products]);
+      loadMore ? setLoadingMore(false) : setLoading(false);
+    } else {
+      try {
+        const response = await fetch(fullUrl);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
+        const data = await response.json();
+        cache.current[fullUrl] = data;
+        setTotalPages(data.TotalPages);
+        setDataFil((prevData) => [...prevData, ...data.Products]);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        loadMore ? setLoadingMore(false) : setLoading(false);
       }
-    };
-    // Set loading when change api url
+    }
+  };
+
+  useEffect(() => {
     if (apiUrl && apiUrl !== prevApiUrl.current) {
-      fetchData();
+      setDataFil([]); // Reset the data when the URL changes
+      setCurrentPage(1); // Reset the current page
+      fetchData(apiUrl);
       prevApiUrl.current = apiUrl;
     }
   }, [apiUrl, setDataFil]);
@@ -79,10 +86,18 @@ export default function ItemsList() {
     }
   }, [sortOption, setDataFil]);
 
+  const handleLoadMore = () => {
+    if (currentPage < totalPages) {
+      const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
+      fetchData(apiUrl, nextPage, true);
+    }
+  };
+
   return (
     <div className="w-[70vw] h-max">
       <div className="w-full h-full grid grid-cols-4 gap-4 overflow-hidden">
-        {loading ? (
+        {loading && currentPage === 1 ? (
           <div className="w-[63vw] h-[80vh] flex justify-center items-center">
             <RingLoader size={100} color="#54cc26" />
           </div>
@@ -138,14 +153,28 @@ export default function ItemsList() {
           ))
         )}
       </div>
-      <div className="mt-12 w-[90vw] h-[20vh]">
+      <div className="mt-12 w-[70vw] h-[20vh]">
         <div className="w-full flex flex-col justify-center items-center">
           <img
             src="https://png.pngtree.com/png-vector/20220719/ourmid/pngtree-eternal-love-symbol-heart-infinity-sign-calligraphy-for-declarations-vector-png-image_37918768.png"
             alt=""
-            className="w-1/4 mb-3"
+            className="w-1/6 mb-3"
           />
-          <div className="font-serif">{`Showing ${dataFil.length} items`}</div>
+          <div className="font-serif">{`Showing ${dataFil.length} items in store`}</div>
+          {isProductsApi && currentPage < totalPages && (
+            <div className="relative mt-5 w-full flex flex-col items-center">
+              <div className="absolute -top-[24vh]">
+                {loadingMore && <RingLoader size={60} color="#54cc26" />}
+              </div>
+              <button
+                onClick={handleLoadMore}
+                className="mt-2 Mfont px-8 py-2 bg-white text-black hover:bg-black hover:text-white border border-green-700 transition-all duration-300"
+                disabled={loadingMore}
+              >
+                {"LOAD MORE"}
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

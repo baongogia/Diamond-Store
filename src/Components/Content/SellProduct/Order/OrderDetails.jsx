@@ -21,8 +21,6 @@ export default function OrderDetails() {
     setShowCancel(!showCancel);
   };
 
-  console.log(order);
-
   // Fetch Data
   useEffect(() => {
     fetch(
@@ -72,11 +70,10 @@ export default function OrderDetails() {
   const fetchLatestOrder = async () => {
     try {
       const response = await axios.get(
-        `https://diamondstoreapi.azurewebsites.net/api/Order/getOrderInfo?id=${order.OrderID}`
+        `https://diamondstoreapi.azurewebsites.net/api/Order/getOrderInfo?orderID=${order.OrderID}`
       );
       if (response.data) {
         setOrder(response.data);
-        console.log({ response });
       }
     } catch (error) {
       console.error("Failed to fetch latest order:", error);
@@ -164,7 +161,9 @@ export default function OrderDetails() {
                     ? "hidden"
                     : ""
                 }`}
-              ></div>
+              >
+                <ion-icon name="close-outline"></ion-icon>
+              </div>
             </div>
             {/* Cancel */}
             <div

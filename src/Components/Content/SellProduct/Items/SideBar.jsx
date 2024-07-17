@@ -15,13 +15,13 @@ export default function SideBar({ initialCategory }) {
   const [caratWeight, setCaratWeight] = useState([0.55, 1.75]);
   const { setApiUrl } = useContext(DataContext);
   const [filters, setFilters] = useState({
-    Cut: [],
-    Clarity: [],
-    Color: [],
-    Origin: [],
-    Gender: [],
-    Category: initialCategory ? [initialCategory] : [],
-    Material: [],
+    Cut: "",
+    Clarity: "",
+    Color: "",
+    Origin: "",
+    Gender: "",
+    Category: initialCategory || "",
+    Material: "",
   });
   const isInitialLoad = useRef(true);
 
@@ -46,23 +46,33 @@ export default function SideBar({ initialCategory }) {
         savedCaratWeight ? JSON.parse(savedCaratWeight) : caratWeight,
         savedFilters ? JSON.parse(savedFilters) : filters
       );
-      const initialApiUrl = `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`;
+      const initialApiUrl =
+        initialCategory === "products"
+          ? "https://diamondstoreapi.azurewebsites.net/api/Products"
+          : `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`;
       setApiUrl(initialApiUrl);
       localStorage.setItem("apiUrl", initialApiUrl);
     }
 
     isInitialLoad.current = false;
-  }, [setApiUrl]);
+  }, [setApiUrl, initialCategory]);
 
   useEffect(() => {
     if (initialCategory) {
+      const newApiUrl =
+        initialCategory === "products"
+          ? "https://diamondstoreapi.azurewebsites.net/api/Products"
+          : `https://diamondstoreapi.azurewebsites.net/api/Products?Category=${initialCategory}`;
+
       setFilters((prevFilters) => {
-        const updatedFilters = { ...prevFilters, Category: [initialCategory] };
+        const updatedFilters = { ...prevFilters, Category: initialCategory };
         localStorage.setItem("filters", JSON.stringify(updatedFilters));
         return updatedFilters;
       });
+      setApiUrl(newApiUrl);
+      localStorage.setItem("apiUrl", newApiUrl);
     }
-  }, [initialCategory]);
+  }, [initialCategory, setApiUrl]);
 
   const handleRadioChange = useCallback(
     (value) => {
@@ -76,13 +86,12 @@ export default function SideBar({ initialCategory }) {
     localStorage.setItem("caratWeight", JSON.stringify(newValue));
   }, []);
 
-  const handleCheckboxChange = useCallback((groupName, value) => {
+  const handleSingleSelectChange = useCallback((groupName, value) => {
     setFilters((prevFilters) => {
-      const groupValues = prevFilters[groupName];
-      const newValues = groupValues.includes(value)
-        ? groupValues.filter((v) => v !== value)
-        : [...groupValues, value];
-      const updatedFilters = { ...prevFilters, [groupName]: newValues };
+      const updatedFilters = {
+        ...prevFilters,
+        [groupName]: prevFilters[groupName] === value ? "" : value,
+      };
       localStorage.setItem("filters", JSON.stringify(updatedFilters));
       return updatedFilters;
     });
@@ -94,8 +103,8 @@ export default function SideBar({ initialCategory }) {
       MaxCaratWeight: caratWeight[1],
       ...Object.fromEntries(
         Object.entries(filters)
-          .filter(([_, values]) => values.length)
-          .map(([key, values]) => [key, values.join(",")])
+          .filter(([_, value]) => value)
+          .map(([key, value]) => [key, value])
       ),
     };
     return new URLSearchParams(params).toString();
@@ -104,7 +113,10 @@ export default function SideBar({ initialCategory }) {
   useEffect(() => {
     if (!isInitialLoad.current) {
       const query = buildQuery(caratWeight, filters);
-      const newApiUrl = `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`;
+      const newApiUrl =
+        filters.Category === "products"
+          ? "https://diamondstoreapi.azurewebsites.net/api/Products"
+          : `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`;
       setApiUrl(newApiUrl);
       localStorage.setItem("apiUrl", newApiUrl);
     }
@@ -161,79 +173,79 @@ export default function SideBar({ initialCategory }) {
           </div>
           <div className="text uppercase mt-5">Cut</div>
           {cutOptions.map((title, index) => (
-            <SquareCheck
+            <SingleSelect
               key={index}
               title={title}
               index={index}
               groupName="Cut"
-              onChange={handleCheckboxChange}
-              isChecked={filters.Cut.includes(title)}
+              onChange={handleSingleSelectChange}
+              isChecked={filters.Cut === title}
             />
           ))}
           <div className="text uppercase mt-5">Clarity</div>
           {ClarityOptions.map((title, index) => (
-            <SquareCheck
+            <SingleSelect
               key={index}
               title={title}
               index={index}
               groupName="Clarity"
-              onChange={handleCheckboxChange}
-              isChecked={filters.Clarity.includes(title)}
+              onChange={handleSingleSelectChange}
+              isChecked={filters.Clarity === title}
             />
           ))}
           <div className="text uppercase mt-5">Color</div>
           {ColorOptions.map((title, index) => (
-            <SquareCheck
+            <SingleSelect
               key={index}
               title={title}
               index={index}
               groupName="Color"
-              onChange={handleCheckboxChange}
-              isChecked={filters.Color.includes(title)}
+              onChange={handleSingleSelectChange}
+              isChecked={filters.Color === title}
             />
           ))}
           <div className="text uppercase mt-5">Origin</div>
           {OriginOptions.map((title, index) => (
-            <SquareCheck
+            <SingleSelect
               key={index}
               title={title}
               index={index}
               groupName="Origin"
-              onChange={handleCheckboxChange}
-              isChecked={filters.Origin.includes(title)}
+              onChange={handleSingleSelectChange}
+              isChecked={filters.Origin === title}
             />
           ))}
           <div className="text uppercase mt-5">Select for</div>
           {selectForOptions.map((title, index) => (
-            <SquareCheck
+            <SingleSelect
               key={index}
               title={title}
               index={index}
               groupName="Gender"
-              onChange={handleCheckboxChange}
-              isChecked={filters.Gender.includes(title)}
+              onChange={handleSingleSelectChange}
+              isChecked={filters.Gender === title}
             />
           ))}
           <div className="text uppercase mt-5">Category</div>
           {categoryOptions.map((title, index) => (
-            <SquareCheck
+            <SingleSelect
               key={index}
               title={title}
               index={index}
               groupName="Category"
-              onChange={handleCheckboxChange}
-              isChecked={filters.Category.includes(title)}
+              onChange={handleSingleSelectChange}
+              isChecked={filters.Category === title}
             />
           ))}
           <div className="text uppercase mt-5">Material</div>
           {metalOptions.map((title, index) => (
-            <SquareCheck
+            <SingleSelect
               key={index}
               title={title}
               index={index}
               groupName="Material"
-              onChange={handleCheckboxChange}
-              isChecked={filters.Material.includes(title)}
+              onChange={handleSingleSelectChange}
+              isChecked={filters.Material === title}
             />
           ))}
         </div>
@@ -261,10 +273,9 @@ const RadioCheck = ({ title, index, onChange }) => {
   );
 };
 
-const SquareCheck = ({
+const SingleSelect = ({
   title,
   index,
-  type = "checkbox",
   groupName,
   onChange,
   isChecked = false,
@@ -272,16 +283,16 @@ const SquareCheck = ({
   const inputId = `${groupName}-${index}`;
   return (
     <div className="flex w-full mt-3">
-      <label htmlFor={inputId} className="checkbox-label">
+      <label htmlFor={inputId} className="radio-label">
         <input
-          type={type}
+          type="checkbox"
           id={inputId}
           name={groupName}
-          className="checkbox-input"
+          className="radio-input"
           onChange={() => onChange(groupName, title)}
           checked={isChecked}
         />
-        <span className="custom-checkbox"></span>
+        <div className="custom-radio"></div>
         <p className="uppercase text-[0.9em] hover:underline ml-2">{title}</p>
       </label>
     </div>
