@@ -20,12 +20,11 @@ export default function SideBar({ initialCategory }) {
     Color: "",
     Origin: "",
     Gender: "",
-    Category: initialCategory || "",
+    Category: initialCategory === "products" ? "" : initialCategory || "",
     Material: "",
   });
   const isInitialLoad = useRef(true);
 
-  // Save user filter
   useEffect(() => {
     const savedFilters = localStorage.getItem("filters");
     const savedCaratWeight = localStorage.getItem("caratWeight");
@@ -46,29 +45,25 @@ export default function SideBar({ initialCategory }) {
         savedCaratWeight ? JSON.parse(savedCaratWeight) : caratWeight,
         savedFilters ? JSON.parse(savedFilters) : filters
       );
-      const initialApiUrl =
-        initialCategory === "products"
-          ? "https://diamondstoreapi.azurewebsites.net/api/Products"
-          : `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`;
+      const initialApiUrl = `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`;
       setApiUrl(initialApiUrl);
       localStorage.setItem("apiUrl", initialApiUrl);
     }
 
     isInitialLoad.current = false;
-  }, [setApiUrl, initialCategory]);
+  }, [setApiUrl]);
 
   useEffect(() => {
     if (initialCategory) {
-      const newApiUrl =
-        initialCategory === "products"
-          ? "https://diamondstoreapi.azurewebsites.net/api/Products"
-          : `https://diamondstoreapi.azurewebsites.net/api/Products?Category=${initialCategory}`;
+      const newCategory = initialCategory === "products" ? "" : initialCategory;
 
       setFilters((prevFilters) => {
-        const updatedFilters = { ...prevFilters, Category: initialCategory };
+        const updatedFilters = { ...prevFilters, Category: newCategory };
         localStorage.setItem("filters", JSON.stringify(updatedFilters));
         return updatedFilters;
       });
+
+      const newApiUrl = `https://diamondstoreapi.azurewebsites.net/api/Products?Category=${newCategory}`;
       setApiUrl(newApiUrl);
       localStorage.setItem("apiUrl", newApiUrl);
     }
@@ -113,10 +108,7 @@ export default function SideBar({ initialCategory }) {
   useEffect(() => {
     if (!isInitialLoad.current) {
       const query = buildQuery(caratWeight, filters);
-      const newApiUrl =
-        filters.Category === "products"
-          ? "https://diamondstoreapi.azurewebsites.net/api/Products"
-          : `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`;
+      const newApiUrl = `https://diamondstoreapi.azurewebsites.net/api/Products?${query}`;
       setApiUrl(newApiUrl);
       localStorage.setItem("apiUrl", newApiUrl);
     }

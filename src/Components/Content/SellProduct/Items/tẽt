@@ -12,10 +12,12 @@ export default function ItemsList() {
   const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const prevApiUrl = useRef("");
   const { sortOption } = useContext(SortingContext);
   const cache = useRef({});
+  const isProductsApi =
+    apiUrl.includes("/api/Products") && !apiUrl.includes("?Category=");
 
   // AOS
   useEffect(() => {
@@ -34,14 +36,14 @@ export default function ItemsList() {
       setLoading(true);
     }
 
-    const fullUrl = `${url}&PageNumber=${page}&PageSize=20`;
+    const fullUrl = isProductsApi ? `${url}?PageNumber=${page}` : url;
 
     if (cache.current[fullUrl]) {
       const cachedData = cache.current[fullUrl];
       setDataFil((prevData) =>
         loadMore ? [...prevData, ...cachedData.Products] : cachedData.Products
       );
-      setTotalItems(cachedData.TotalRecords || 0);
+      setTotalPages(cachedData.TotalPages);
       loadMore ? setLoadingMore(false) : setLoading(false);
     } else {
       try {
@@ -51,7 +53,7 @@ export default function ItemsList() {
         }
         const data = await response.json();
         cache.current[fullUrl] = data;
-        setTotalItems(data.TotalRecords || 0);
+        setTotalPages(data.TotalPages);
         setDataFil((prevData) =>
           loadMore ? [...prevData, ...data.Products] : data.Products
         );
@@ -98,15 +100,17 @@ export default function ItemsList() {
   }, [sortOption, setDataFil]);
 
   const handleLoadMore = () => {
-    const nextPage = currentPage + 1;
-    setCurrentPage(nextPage);
-    fetchData(apiUrl, nextPage, true);
+    if (currentPage < totalPages) {
+      const nextPage = currentPage + 1;
+      setCurrentPage(nextPage);
+      fetchData(apiUrl, nextPage, true);
+    }
   };
 
   return (
     <div className="w-[70vw] h-max">
       <div className="w-full h-full grid grid-cols-4 gap-4 overflow-hidden">
-        {loading && currentPage === 1 ? (
+        {loading ? (
           <div className="w-[63vw] h-[80vh] flex justify-center items-center">
             <RingLoader size={100} color="#54cc26" />
           </div>
@@ -169,12 +173,10 @@ export default function ItemsList() {
             alt=""
             className="w-1/6 mb-3"
           />
-          <div className="font-serif">{`Showing ${dataFil.length} of ${totalItems} items`}</div>
-          {dataFil.length < totalItems && (
+          <div className="font-serif">{`Showing ${dataFil.length} items in store`}</div>
+          {isProductsApi && currentPage < totalPages && (
             <div className="relative mt-5 w-full flex flex-col items-center">
-              <div className="absolute -top-[24vh]">
-                {loadingMore && <RingLoader size={60} color="#54cc26" />}
-              </div>
+              {loadingMore && <RingLoader size={60} color="#54cc26" />}
               {!loadingMore && (
                 <button
                   onClick={handleLoadMore}
