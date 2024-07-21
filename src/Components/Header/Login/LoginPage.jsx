@@ -42,7 +42,6 @@ export default function LoginPage() {
       // Update context state
       login(userData);
       navigate("/UserProfile");
-
       console.log("Login successful!");
       console.log(response.data);
     } catch (error) {
@@ -73,6 +72,41 @@ export default function LoginPage() {
     setForgotPass(!forgotPass);
     setOverlay(!overlay);
   };
+
+  const logout = () => {
+    localStorage.setItem("isLoggedIn", "false");
+    localStorage.removeItem("userData");
+    window.location.reload();
+  };
+
+  const checkUserStatus = async () => {
+    const token = localStorage.getItem("token");
+    const userData = JSON.parse(localStorage.getItem("userData"))?.data;
+    if (token && userData) {
+      try {
+        const response = await axios.post(
+          "https://diamondstoreapi.azurewebsites.net/api/Accounts/login",
+          {
+            username: userData.username,
+            password: userData.password,
+          }
+        );
+        const updatedUserData = response.data.CustomerInfo;
+        if (!updatedUserData.Status) {
+          localStorage.setItem("isLoggedIn", "false");
+          logout();
+          navigate("/login");
+        }
+      } catch (error) {
+        console.error("Failed to check user status:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const interval = setInterval(checkUserStatus, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="relative z-[0] pointer-events-auto w-[100vw] mt-16">

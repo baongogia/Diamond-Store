@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../Login/UserContext";
 import axios from "axios";
+
 export const token = localStorage.getItem("token");
 
 export default function MyProfile() {
@@ -13,6 +14,7 @@ export default function MyProfile() {
     Address: "",
     Gender: "",
   });
+  const [initialPhoneNumber, setInitialPhoneNumber] = useState("");
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -25,6 +27,7 @@ export default function MyProfile() {
         Address: userData.Address || "",
         Gender: userData.Gender || "",
       });
+      setInitialPhoneNumber(userData.PhoneNumber || "");
     }
   }, [userData]);
 
@@ -50,7 +53,7 @@ export default function MyProfile() {
       newErrors.PhoneNumber = "Phone Number is required";
     } else if (!phoneRegex.test(formData.PhoneNumber)) {
       newErrors.PhoneNumber = "Invalid phone number";
-    } else {
+    } else if (formData.PhoneNumber !== initialPhoneNumber) {
       try {
         const checkPhone = await axios.post(
           `https://diamondstoreapi.azurewebsites.net/api/Accounts/CheckPhoneExist?phone=${formData.PhoneNumber}`
@@ -67,7 +70,7 @@ export default function MyProfile() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = validate();
+    const newErrors = await validate();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;

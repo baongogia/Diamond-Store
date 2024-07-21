@@ -88,7 +88,7 @@ export default function OrderDetails() {
       if (order) {
         fetchLatestOrder();
       }
-    }, 1000); // Fetch latest data every 5 seconds
+    }, 1000);
 
     return () => clearInterval(intervalId); // Cleanup on unmount
   }, [order]);
