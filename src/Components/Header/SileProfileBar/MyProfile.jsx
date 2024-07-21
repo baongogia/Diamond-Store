@@ -1,5 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { UserContext } from "../Login/UserContext";
+import axios from "axios";
+export const token = localStorage.getItem("token");
 
 export default function MyProfile() {
   const { userData, setUserData } = useContext(UserContext);
@@ -38,14 +40,28 @@ export default function MyProfile() {
     });
   };
 
-  const validate = () => {
+  const validate = async () => {
     const newErrors = {};
-    const phoneRegex = /^[0-9]{10}$/;
     if (!formData.FirstName) newErrors.FirstName = "First Name is required";
     if (!formData.LastName) newErrors.LastName = "Last Name is required";
     if (!formData.Birthday) newErrors.Birthday = "Birthday is required";
-    if (!formData.PhoneNumber || !phoneRegex.test(formData.PhoneNumber))
-      newErrors.PhoneNumber = "Valid Phone Number is required";
+    const phoneRegex = /^\d{10,15}$/;
+    if (!formData.PhoneNumber) {
+      newErrors.PhoneNumber = "Phone Number is required";
+    } else if (!phoneRegex.test(formData.PhoneNumber)) {
+      newErrors.PhoneNumber = "Invalid phone number";
+    } else {
+      try {
+        const checkPhone = await axios.post(
+          `https://diamondstoreapi.azurewebsites.net/api/Accounts/CheckPhoneExist?phone=${formData.PhoneNumber}`
+        );
+        if (checkPhone.data) {
+          newErrors.PhoneNumber = "Phone number already exists";
+        }
+      } catch (err) {
+        console.log("Error checking phone number:", err);
+      }
+    }
     return newErrors;
   };
 
@@ -56,8 +72,6 @@ export default function MyProfile() {
       setErrors(newErrors);
       return;
     }
-
-    const token = localStorage.getItem("token");
 
     try {
       const response = await fetch(

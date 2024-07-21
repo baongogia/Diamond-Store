@@ -117,6 +117,7 @@ export default function ReviewOrder() {
                   <input
                     type="checkbox"
                     checked={true}
+                    readOnly
                     className="pointer-events-none"
                     name=""
                     id=""

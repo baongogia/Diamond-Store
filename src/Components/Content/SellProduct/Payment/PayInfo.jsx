@@ -14,6 +14,7 @@ export default function PayInfo() {
           <input
             type={type}
             required
+            onChange={() => {}}
             placeholder={placeholder}
             value={value}
             className="peer outline-none border-b-[0.1em] border-b-black bg-zinc-300 bg-opacity-0 w-full h-[2em]"
@@ -33,6 +34,7 @@ export default function PayInfo() {
             type="radio"
             name="choice"
             value="option1"
+            readOnly
             checked={userData?.Gender}
           />
           <label htmlFor="option1">Mr</label>
@@ -42,6 +44,7 @@ export default function PayInfo() {
             type="radio"
             name="choice"
             value="option2"
+            readOnly
             checked={!userData?.Gender}
           />
           <label htmlFor="option2">Mrs</label>
@@ -51,6 +54,7 @@ export default function PayInfo() {
             type="radio"
             name="choice"
             value="option3"
+            readOnly
             checked={!userData?.Gender}
           />
           <label htmlFor="option3">Miss</label>

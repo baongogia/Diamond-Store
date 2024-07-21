@@ -22,7 +22,6 @@ export default function PaymentDetails({ title, linkto }) {
 
   // Clear Cart and get cart items
   const { clearCart, cartItems } = useContext(CartContext);
-  console.log(cartItems.map((item) => item.productID));
 
   // Change Product Status
   const changeProductStatus = async (productIds) => {
@@ -41,8 +40,7 @@ export default function PaymentDetails({ title, linkto }) {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const result = await response.json();
-      console.log("Status order change successfully:", result);
+      console.log("Status order change successfully");
     } catch (error) {
       console.error("There was an error creating the order:", error);
     }
@@ -61,6 +59,9 @@ export default function PaymentDetails({ title, linkto }) {
         Quantity: item.quantity,
       })),
       Deposits: 0,
+      TransactionId: "",
+      PayerEmail: "",
+      PaymentStatus: "",
     };
 
     try {
@@ -81,10 +82,13 @@ export default function PaymentDetails({ title, linkto }) {
 
       const result = await response.json();
       setOrder(result);
+      // Save order to localStorage
       localStorage.setItem("order", JSON.stringify(result));
+      // Change Product Status
       changeProductStatus(cartItems.map((item) => item.productID));
-      console.log("Order created successfully:", result);
+      // Clear Cart
       clearCart();
+      console.log("Order created successfully:", result);
     } catch (error) {
       console.error("There was an error creating the order:", error);
     }
@@ -159,7 +163,11 @@ export default function PaymentDetails({ title, linkto }) {
           <div
             onClick={handleClick}
             className={`uppercase text-center w-full bg-black text-white font-semibold py-1 border-black border-[0.1em]
-             cursor-pointer transition-colors duration-500 hover:bg-white hover:text-black`}
+             cursor-pointer transition-colors duration-500 hover:bg-white hover:text-black ${
+               title === "place your order" && !paymentMethod
+                 ? "pointer-events-none opacity-50"
+                 : "pointer-events-auto"
+             }`}
           >
             {title}
           </div>

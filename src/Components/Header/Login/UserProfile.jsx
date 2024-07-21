@@ -11,7 +11,6 @@ import MyOrder from "../SileProfileBar/MyOrder";
 import MyAddress from "../SileProfileBar/MyAddress";
 import MyCollection from "../SileProfileBar/MyCollection";
 import MySub from "../SileProfileBar/MySub";
-import PaypalBalance from "../../Content/SellProduct/Payment/PaypalBalance";
 
 export default function UserProfile() {
   const { userData } = useContext(UserContext);
@@ -123,9 +122,6 @@ export default function UserProfile() {
                     ></div>
                     {userData.Ranking ? userData.Ranking : ""} (
                     {userData.DiscountRate * 100}% discount for all orders)
-                  </div>
-                  <div className="">
-                    <PaypalBalance />
                   </div>
                 </div>
               </div>

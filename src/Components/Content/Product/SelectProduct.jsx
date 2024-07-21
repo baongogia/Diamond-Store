@@ -49,7 +49,6 @@ export default function SelectProduct({ details }) {
   useEffect(() => {
     const fetchGemDetails = async () => {
       if (!details?.GemId) {
-        console.error("GemId is undefined or null");
         return;
       }
 

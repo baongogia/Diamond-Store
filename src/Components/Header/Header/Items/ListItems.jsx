@@ -119,9 +119,9 @@ export default function ListItems({ titles }) {
           </div>
         ) : data ? (
           <Slider {...settings}>
-            {data.map((list) => (
+            {data.map((list, index) => (
               <ProductListItems
-                key={list.CategoryId}
+                key={index}
                 img={list.Image}
                 title={list.ProductName}
                 category={category}

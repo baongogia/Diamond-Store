@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CreditCard from "./CreditCard";
 import { CartContext } from "../../../Header/Header/Cart/CartContext";
 import Paypal from "./Paypal";
@@ -9,7 +9,7 @@ import { OrderContext } from "../Order/OrderContext";
 
 export default function PaymentMethod() {
   const { cartItems, clearCart } = useContext(CartContext);
-  const { setOrder } = useContext(OrderContext);
+  const { order, setOrder } = useContext(OrderContext);
   const { userData } = useContext(UserContext);
   const { paymentMethod, setPaymentMethod } = useContext(PaymentContext);
   const subtotal = cartItems.reduce(
@@ -42,19 +42,21 @@ export default function PaymentMethod() {
     }
   };
 
-  const createOrder = async (paymentDetails) => {
+  const createOrder = async (transactionDetails) => {
     const orderData = {
-      Username: userData.UserName,
+      Username: userData?.UserName,
       OrderDate: new Date().toISOString(),
       PaymentMethod: paymentMethod,
-      Products: cartItems.map((item) => ({
+      Products: cartItems?.map((item) => ({
         ProductID: item.productID,
         ProductName: item.name,
         CustomizedSize: item.size,
         Quantity: item.quantity,
       })),
       Deposits: deposit,
-      PaymentDetails: paymentDetails,
+      TransactionId: transactionDetails?.id,
+      PayerEmail: transactionDetails?.payer.email_address,
+      PaymentStatus: transactionDetails?.status,
     };
 
     try {
@@ -74,6 +76,7 @@ export default function PaymentMethod() {
       }
 
       const result = await response.json();
+      console.log(result);
       setOrder(result);
       localStorage.setItem("order", JSON.stringify(result));
       changeProductStatus(cartItems.map((item) => item.productID));
@@ -92,6 +95,7 @@ export default function PaymentMethod() {
     clearCart();
     navigate("/OrderSuccess");
     console.log("Payment Successful:", details);
+    console.log(order);
   };
 
   return (

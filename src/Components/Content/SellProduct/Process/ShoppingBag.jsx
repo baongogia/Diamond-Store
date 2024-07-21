@@ -69,8 +69,8 @@ export default function ShoppingBag() {
               </div>
             </div>
             {cartItems.length > 0 ? (
-              cartItems.map((item) => (
-                <ShopingBagItems id={item.id} item={item} />
+              cartItems.map((item, index) => (
+                <ShopingBagItems key={index} id={item.id} item={item} />
               ))
             ) : (
               <div className=""></div>

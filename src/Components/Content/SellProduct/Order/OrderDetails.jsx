@@ -66,11 +66,13 @@ export default function OrderDetails() {
     }
   }, [order]);
 
+  console.log(order);
+
   // Fetch latest order data from the server
   const fetchLatestOrder = async () => {
     try {
       const response = await axios.get(
-        `https://diamondstoreapi.azurewebsites.net/api/Order/getOrderInfo?orderID=${order.OrderID}`
+        `https://diamondstoreapi.azurewebsites.net/api/Order/getOrderInfo?id=${order.OrderID}`
       );
       if (response.data) {
         setOrder(response.data);

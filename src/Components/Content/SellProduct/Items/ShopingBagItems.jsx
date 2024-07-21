@@ -66,6 +66,7 @@ export default function ShopingBagItems({ item }) {
           <input
             type="checkbox"
             checked={true}
+            readOnly
             className="pointer-events-none"
             name="wrap"
             id=""

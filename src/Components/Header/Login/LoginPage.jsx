@@ -30,7 +30,7 @@ export default function LoginPage() {
       );
       const userData = response.data.CustomerInfo;
       const token = response.data.Token;
-
+      console.log(response.data);
       // Update local storage
       localStorage.setItem("userData", JSON.stringify({ data: userData }));
       localStorage.setItem("token", token);
@@ -182,11 +182,7 @@ export default function LoginPage() {
         </div>
       </div>
       {/* Register form */}
-      <div
-        className={`relative font-serif flex items-center flex-col w-full h-[60em] ${
-          register ? "" : "hidden"
-        }`}
-      >
+      <div className={`${register ? "" : "hidden"}`}>
         <RegisterForm />
       </div>
       {/* Forgot password form */}

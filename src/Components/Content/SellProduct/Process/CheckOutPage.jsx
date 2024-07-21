@@ -108,6 +108,7 @@ export default function CheckOutPage() {
                     <input
                       checked={true}
                       type="radio"
+                      readOnly
                       id={"inputId"}
                       name="radio"
                       className="radio-input"

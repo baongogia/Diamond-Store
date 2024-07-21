@@ -2,6 +2,20 @@ import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 const Paypal = ({ amount, onSuccess }) => {
+  const handleApprove = (details) => {
+    // Lấy danh sách giao dịch hiện tại từ LocalStorage
+    const existingTransactions =
+      JSON.parse(localStorage.getItem("transactions")) || [];
+
+    // Thêm giao dịch mới vào mảng
+    const updatedTransactions = [...existingTransactions, details];
+
+    // Lưu mảng giao dịch mới vào LocalStorage
+    localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
+    console.log("Transaction details saved to LocalStorage:", details);
+
+    onSuccess(details);
+  };
   return (
     <PayPalScriptProvider
       options={{
@@ -24,8 +38,7 @@ const Paypal = ({ amount, onSuccess }) => {
         }}
         onApprove={(data, actions) => {
           return actions.order.capture().then((details) => {
-            onSuccess(details);
-            // Xử lý logic sau khi thanh toán thành công ở đây
+            handleApprove(details);
           });
         }}
         onError={(err) => {

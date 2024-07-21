@@ -29,6 +29,7 @@ export default function PaymentDetailsCard({ item }) {
             name="wrap"
             className="pointer-events-none"
             id=""
+            readOnly
             checked={true}
           />
           <label htmlFor="wrap" className="ml-5 flex items-center">
