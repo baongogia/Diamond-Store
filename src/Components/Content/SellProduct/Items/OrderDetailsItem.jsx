@@ -46,10 +46,10 @@ export default function OrderDetailsItem() {
         <div className="Mfont flex flex-col justify-between h-1/3">
           <div className="font-serif flex flex-col justify-between h-1/3">
             <div>
-              Customer Name: {userData.FirstName} {userData.LastName}
+              Customer Name: {userData?.FirstName} {userData?.LastName}
             </div>
-            <div>Phone: {userData.PhoneNumber}</div>
-            <div>Address: {userData.Address}</div>
+            <div>Phone: {userData?.PhoneNumber}</div>
+            <div>Address: {userData?.Address}</div>
             <div>Order Date: {orderDate}</div>
             <div>Expected Delivery Date: {formattedDeliveryDate}</div>
           </div>
