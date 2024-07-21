@@ -34,7 +34,7 @@ export default function ItemsList() {
       setLoading(true);
     }
 
-    const fullUrl = `${url}&PageNumber=${page}&PageSize=20`;
+    const fullUrl = `${url}&PageNumber=${page}&PageSize=10`;
 
     if (cache.current[fullUrl]) {
       const cachedData = cache.current[fullUrl];

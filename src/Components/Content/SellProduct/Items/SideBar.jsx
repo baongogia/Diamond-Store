@@ -59,7 +59,6 @@ export default function SideBar({ initialCategory }) {
 
       setFilters((prevFilters) => {
         const updatedFilters = { ...prevFilters, Category: newCategory };
-        localStorage.setItem("filters", JSON.stringify(updatedFilters));
         return updatedFilters;
       });
 
@@ -87,7 +86,6 @@ export default function SideBar({ initialCategory }) {
         ...prevFilters,
         [groupName]: prevFilters[groupName] === value ? "" : value,
       };
-      localStorage.setItem("filters", JSON.stringify(updatedFilters));
       return updatedFilters;
     });
   }, []);
