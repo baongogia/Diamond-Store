@@ -81,6 +81,7 @@ export default function PaymentDetails({ title, linkto }) {
       }
 
       const result = await response.json();
+      localStorage.removeItem("order");
       setOrder(result);
       // Save order to localStorage
       localStorage.setItem("order", JSON.stringify(result));

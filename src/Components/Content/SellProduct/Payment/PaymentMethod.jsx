@@ -70,15 +70,13 @@ export default function PaymentMethod() {
           body: JSON.stringify(orderData),
         }
       );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
       const result = await response.json();
-      console.log(result);
+      // Clear existing order data
+      localStorage.removeItem("order");
+      // Set new order data
       setOrder(result);
       localStorage.setItem("order", JSON.stringify(result));
+      // Update product status and clear cart
       changeProductStatus(cartItems.map((item) => item.productID));
       clearCart();
     } catch (error) {
