@@ -97,7 +97,7 @@ export default function OrderDetails() {
   const cancelProduct = async () => {
     try {
       const response = await axios.put(
-        `https://diamondstoreapi.azurewebsites.net/api/Order/CancelOrder?id=${order.OrderID}`
+        `https://diamondstoreapi.azurewebsites.net/api/Order/CancelOrder?orderID=${order.OrderID}`
       );
       console.log("Cancel successful!");
       if (response) {
