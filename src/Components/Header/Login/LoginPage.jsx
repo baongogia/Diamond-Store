@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import RegisterForm, { Input } from "./RegisterForm";
+import RegisterForm from "./RegisterForm";
 import GGLogin from "./GGLogin";
 import axios from "axios";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "./firebaseConfig";
 
 export default function LoginPage() {
   const [register, setRegister] = useState(false);
@@ -12,13 +14,17 @@ export default function LoginPage() {
   const [overlay, setOverlay] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [errors, setErrors] = useState("");
+  const [resetMessage, setResetMessage] = useState("");
   const { login } = useContext(UserContext);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   });
+
   const navigate = useNavigate();
+
   const handleLogin = async (username, password) => {
     try {
       const response = await axios.post(
@@ -30,7 +36,6 @@ export default function LoginPage() {
       );
       const userData = response.data.CustomerInfo;
       const token = response.data.Token;
-      console.log(response.data);
       // Update local storage
       localStorage.setItem("userData", JSON.stringify({ data: userData }));
       localStorage.setItem("token", token);
@@ -42,17 +47,28 @@ export default function LoginPage() {
       // Update context state
       login(userData);
       navigate("/UserProfile");
-      console.log("Login successful!");
-      console.log(response.data);
     } catch (error) {
       setErrors("Wrong username or password");
-      console.error("Login failed:", error);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     handleLogin(username, password);
+  };
+  const actionCodeSettings = {
+    url: "https://diamond-store-eta.vercel.app/ResetPassword", // Your custom URL
+    handleCodeInApp: true, // This ensures the link is handled by your app
+  };
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    try {
+      await sendPasswordResetEmail(auth, email, actionCodeSettings);
+      setResetMessage("A password reset link has been sent to your email.");
+      setEmail("");
+    } catch (error) {
+      setResetMessage("Failed to send password reset email. Please try again.");
+    }
   };
 
   axios.interceptors.request.use(
@@ -121,7 +137,7 @@ export default function LoginPage() {
               active ? "" : "underline"
             } hover:underline uppercase cursor-pointer text-[1.6em]`}
           >
-            Already registed?
+            Already registered?
           </div>
           <div
             onClick={() => {
@@ -151,7 +167,7 @@ export default function LoginPage() {
           <div className={`font-serif mt-10 text-start w-[37.5%]`}>
             {register
               ? "This space allows you to manage your personal information, e-Boutique orders, news updates and newsletter subscriptions."
-              : "If you are already registed with Eternity, login here:"}
+              : "If you are already registered with Eternity, login here:"}
           </div>
           <div
             className={`absolute top-28 font-serif flex items-center flex-col w-full ${
@@ -242,13 +258,28 @@ export default function LoginPage() {
             Provide your account email address to receive an email to reset your
             password.
           </div>
-          <div className="w-full">{Input("text", "", "Email address*")}</div>
-          <div
-            className="bg-black text-center text-white w-[63%] font-semibold px-4 py-2 uppercase text
-                 hover:bg-white hover:text-black border-black border-solid border-[0.1em] cursor-pointer transition-colors duration-500"
+          <form
+            onSubmit={handleForgotPassword}
+            className="w-full flex flex-col items-center"
           >
-            submit request
-          </div>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder="Email address*"
+              className="peer ... outline-none border-b-[0.1em] border-b-black bg-zinc-300 bg-opacity-0 w-full"
+            />
+            <button
+              type="submit"
+              className="bg-black text-center text-white w-[63%] font-semibold px-4 py-2 mt-4 uppercase text hover:bg-white hover:text-black border-black border-solid border-[0.1em] cursor-pointer transition-colors duration-500"
+            >
+              Submit request
+            </button>
+          </form>
+          {resetMessage && (
+            <p className="text-green-500 text-xs mt-4">{resetMessage}</p>
+          )}
         </div>
       </div>
       {/* Overlay */}

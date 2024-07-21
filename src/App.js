@@ -6,6 +6,7 @@ import Navbar from "./Components/Header/Header/Navbar/Navbar";
 import Footer from "./Components/Footer/Footer";
 import HideFooter from "./Components/Hide/HideFooter";
 import { RingLoader } from "react-spinners";
+import ResetPassword from "./Components/Header/Login/ResetPassword";
 
 // Sử dụng React.lazy để lazy-load các component
 const HomePage = lazy(() => import("./Components/Content/HomePage/HomePage"));
@@ -85,6 +86,7 @@ function App() {
           <Route path="/UserProfile" element={<UserProfile />} />
           <Route path="/OrderDetails" element={<OrderDetails />} />
           <Route path="/OrderHistory" element={<OrderHistory />} />
+          <Route path="/ResetPassword" element={<ResetPassword />} />
           <Route
             path="/HistoryOrderDetails/:id"
             element={<HistoryOrderDetails />}
