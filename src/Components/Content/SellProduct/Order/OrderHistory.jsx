@@ -88,7 +88,7 @@ export default function OrderHistory() {
         } hover:shadow-md hover:shadow-green-700 hover:bg-green-400`}
       >
         <div
-          className={`absolute left-full border-green-700 border-t-2 w-[54%] ${
+          className={`absolute left-full border-green-700 border-t-2 2xl:w-[105%] w-[54%] ${
             name === "Cancelled" ? "hidden" : ""
           }`}
         ></div>
