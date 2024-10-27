@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
-// import ProductCard from "../Product/ProductCard";
 import HomeCard from "./HomeCard";
 import { RingLoader } from "react-spinners";
 
